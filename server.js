@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const TelegramBot = require("node-telegram-bot-api");
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,12 @@ app.use(express.static(__dirname));
 // 🔐 логин / пароль админа
 const ADMIN_LOGIN = "admin";
 const ADMIN_PASSWORD = "12345";
+
+// 🔐 Telegram из env (Render Environment Variables)
+const TOKEN = process.env.BOT_TOKEN;
+const CHAT_ID = process.env.CHAT_ID;
+
+const bot = new TelegramBot(TOKEN, { polling: false });
 
 // база данных
 const db = new sqlite3.Database("./patients.db");
@@ -40,23 +47,34 @@ app.post("/login", (req, res) => {
 app.post("/book", (req, res) => {
   const { name, phone, email } = req.body;
 
+  if (!name || !phone) {
+    return res.status(400).json({ message: "Заполните имя и телефон" });
+  }
+
   db.run(
     "INSERT INTO patients (name, phone, email) VALUES (?, ?, ?)",
     [name, phone, email],
-    () => {
+    async (err) => {
+      if (err) {
+        console.error("DB error:", err);
+        return res.status(500).json({ message: "Ошибка базы данных" });
+      }
 
       const message = `🦷 Новая заявка!
 Имя: ${name}
 Телефон: ${phone}
 Email: ${email || "-"}`;
 
-      bot.sendMessage(CHAT_ID, message);
-
-      res.json({ message: "Заявка отправлена и отправлена в Telegram" });
+      try {
+        await bot.sendMessage(CHAT_ID, message);
+        res.json({ message: "Заявка успешно отправлена!" });
+      } catch (e) {
+        console.error("Telegram error:", e);
+        res.json({ message: "Заявка сохранена, Telegram временно недоступен" });
+      }
     }
   );
 });
-
 
 // получить всех
 app.get("/patients", (req, res) => {
@@ -87,19 +105,13 @@ app.get("/export", (req, res) => {
   });
 });
 
+// админка
 app.get("/admin", (req, res) => {
   res.sendFile(path.join(__dirname, "admin.html"));
 });
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Server running on port " + PORT);
 });
-
-
-const TelegramBot = require("node-telegram-bot-api");
-
-const TOKEN = "8573049252:AAEphvfstHv9QL4LdJlDeq8F9HWLaVLHFe0";
-const CHAT_ID = "7520455883";
-
-const bot = new TelegramBot(TOKEN, { polling: false });

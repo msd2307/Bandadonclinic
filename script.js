@@ -26,7 +26,7 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    const response = await fetch("http://localhost:3000/book", {
+    const response = await fetch("/book", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -39,13 +39,7 @@ form.addEventListener("submit", async (e) => {
     form.reset();
 
   } catch (error) {
+    console.error(error);
     statusText.innerText = "Ошибка отправки. Попробуйте позже.";
   }
 });
-
-const TelegramBot = require("node-telegram-bot-api");
-
-const TOKEN = "8573049252:AAEphvfstHv9QL4LdJlDeq8F9HWLaVLHFe0";
-const CHAT_ID = "7520455883";
-
-const bot = new TelegramBot(TOKEN, { polling: false });
