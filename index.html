@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Премиальная эстетическая клиника</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="bg-shape shape-1"></div>
+<div class="bg-shape shape-2"></div>
+<div class="bg-tooth"></div>
+
+<header class="hero">
+  <div class="container fade-in">
+    <span class="badge">Авторская эстетическая медицина</span>
+    <h1>Совершенная эстетика<br>и здоровье</h1>
+    <p>Персональные программы омоложения и ухода</p>
+    <a href="#form" class="btn">Записаться на консультацию</a>
+  </div>
+</header>
+
+<section class="section reveal">
+  <div class="container split">
+    <div>
+      <h2>Авторская клиника</h2>
+      <p>
+        Мы объединяем науку, эстетику и индивидуальный подход
+        для создания естественной красоты и уверенности.
+      </p>
+    </div>
+    <div class="tooth-card">
+      <svg viewBox="0 0 200 200">
+        <path d="M100 20 C40 20 20 60 30 110
+                 C40 160 70 180 85 160
+                 C95 140 105 140 115 160
+                 C130 180 160 160 170 110
+                 C180 60 160 20 100 20Z"
+              fill="#e0f2fe"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section light reveal">
+  <div class="container grid">
+    <div class="card">💎 Индивидуальные программы</div>
+    <div class="card">⚡ Быстрый результат</div>
+    <div class="card">🧠 Экспертный подход</div>
+    <div class="card">🌿 Безопасные методики</div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <h2>Этапы работы</h2>
+    <div class="timeline">
+      <div>Консультация</div>
+      <div>Диагностика</div>
+      <div>Процедуры</div>
+      <div>Результат</div>
+    </div>
+  </div>
+</section>
+
+<section class="section light reveal">
+  <div class="container price">
+    <h2>Стоимость</h2>
+    <p>Персональная программа</p>
+    <strong>по индивидуальному плану</strong>
+  </div>
+</section>
+
+<section class="section reveal" id="form">
+  <div class="container form-card">
+    <h2>Консультация врача</h2>
+
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="Ваше имя" required />
+      <input type="tel" id="phone" placeholder="Телефон" required />
+      <input type="email" id="email" placeholder="Email" />
+      <button type="submit">Отправить заявку</button>
+    </form>
+
+    <p id="status"></p>
+  </div>
+</section>
+
+<footer>
+  © 2026 Авторская эстетическая клиника  
+  +7 (977) 777-77-77
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
