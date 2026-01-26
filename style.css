@@ -235,3 +235,80 @@ footer {
   from { transform: scale(0.7); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+/* ===== MOBILE VERSION ===== */
+@media (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: 34px;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+
+  .badge {
+    font-size: 13px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 24px;
+    font-size: 16px;
+  }
+
+  .price strong {
+    font-size: 32px;
+  }
+
+  .form-card {
+    max-width: 100%;
+  }
+
+  input, button {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  footer {
+    font-size: 14px;
+    padding: 24px;
+  }
+
+  .bg-shape,
+  .bg-tooth {
+    display: none;
+  }
+}
