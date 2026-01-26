@@ -1,34 +1,17 @@
-// Анимации reveal
-const reveals = document.querySelectorAll('.reveal');
-
-function reveal() {
-  reveals.forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 120) {
-      el.classList.add('active');
-    }
-  });
-}
-window.addEventListener('scroll', reveal);
-reveal();
-
-
-// Форма отправки
 const form = document.getElementById("bookingForm");
+const statusText = document.getElementById("status");
 const popup = document.getElementById("popup");
-const closePopup = document.getElementById("closePopup");
-const button = form.querySelector("button");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  button.disabled = true;
-  button.innerText = "Отправляем...";
-
   const data = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    email: document.getElementById("email").value
+    name: form.name.value,
+    phone: form.phone.value,
+    email: form.email.value
   };
+
+  statusText.innerText = "Отправляем...";
 
   try {
     const response = await fetch("/book", {
@@ -39,17 +22,21 @@ form.addEventListener("submit", async (e) => {
 
     const result = await response.json();
 
-    popup.classList.remove("hidden");
+    if (!response.ok) {
+      statusText.innerText = result.message;
+      return;
+    }
+
+    popup.classList.add("show");
+    statusText.innerText = result.message;
     form.reset();
 
   } catch (error) {
-    alert("Ошибка отправки. Попробуйте позже.");
+    console.error(error);
+    statusText.innerText = "Ошибка соединения с сервером";
   }
-
-  button.disabled = false;
-  button.innerText = "Отправить заявку";
 });
 
-closePopup.addEventListener("click", () => {
-  popup.classList.add("hidden");
-});
+function closePopup() {
+  popup.classList.remove("show");
+}
