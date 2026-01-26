@@ -50,7 +50,10 @@ app.post("/book", (req, res) => {
   const { name, phone, email } = req.body;
 
   if (!name || !phone) {
-    return res.status(400).json({ message: "Введите имя и телефон" });
+    return res.status(400).json({
+      success: false,
+      message: "Введите имя и телефон"
+    });
   }
 
   db.run(
@@ -59,24 +62,30 @@ app.post("/book", (req, res) => {
     (err) => {
       if (err) {
         console.error("DB error:", err);
-        return res.status(500).json({ message: "Ошибка сервера" });
+        return res.status(500).json({
+          success: false,
+          message: "Ошибка базы данных"
+        });
       }
 
-      // ✅ сначала ответ клиенту
-      res.json({ message: "Заявка успешно отправлена!" });
+      // ✅ сразу отвечаем клиенту
+      res.json({
+        success: true,
+        message: "Заявка успешно отправлена!"
+      });
 
-      // 🔁 потом Telegram (не влияет на ответ)
-      const tgMessage = `🦷 Новая заявка!
+      // Telegram — отдельно
+      const msg = `🦷 Новая заявка:
 Имя: ${name}
 Телефон: ${phone}
 Email: ${email || "-"}`;
 
-      bot.sendMessage(CHAT_ID, tgMessage)
-        .then(() => console.log("Telegram sent"))
-        .catch(err => console.error("Telegram error:", err));
+      bot.sendMessage(CHAT_ID, msg)
+        .catch(e => console.error("Telegram error:", e));
     }
   );
 });
+
 
 // ===== Get patients =====
 app.get("/patients", (req, res) => {

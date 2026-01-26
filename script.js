@@ -14,15 +14,13 @@ reveal();
 
 // Форма отправки
 const form = document.getElementById("bookingForm");
-const popup = document.getElementById("popup");
-const closePopup = document.getElementById("closePopup");
-const button = form.querySelector("button");
+const statusText = document.getElementById("status");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  button.disabled = true;
-  button.innerText = "Отправляем...";
+  statusText.innerText = "Отправка...";
+  statusText.style.color = "black";
 
   const data = {
     name: document.getElementById("name").value,
@@ -33,23 +31,27 @@ form.addEventListener("submit", async (e) => {
   try {
     const response = await fetch("/book", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(data)
     });
 
     const result = await response.json();
+    console.log("Server response:", result);
 
-    popup.classList.remove("hidden");
-    form.reset();
+    if (result.success === true) {
+      statusText.innerText = result.message;
+      statusText.style.color = "green";
+      form.reset();
+    } else {
+      statusText.innerText = result.message || "Ошибка отправки";
+      statusText.style.color = "red";
+    }
 
   } catch (error) {
-    alert("Ошибка отправки. Попробуйте позже.");
-  }ф
-
-  button.disabled = false;
-  button.innerText = "Отправить заявку";
-});
-
-closePopup.addEventListener("click", () => {
-  popup.classList.add("hidden");
+    console.error("Fetch error:", error);
+    statusText.innerText = "Ошибка соединения с сервером";
+    statusText.style.color = "red";
+  }
 });
