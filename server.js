@@ -11,9 +11,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// ===== Admin credentials (потом вынесем в env) =====
-const ADMIN_LOGIN = process.env.ADMIN_LOGIN || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "12345";
+// ===== Admin credentials 
+const ADMIN_LOGIN = process.env.ADMIN_LOGIN 
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD 
 
 // ===== Telegram from env =====
 const TOKEN = process.env.BOT_TOKEN;
