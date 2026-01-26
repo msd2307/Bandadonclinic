@@ -14,10 +14,15 @@ reveal();
 
 // Форма отправки
 const form = document.getElementById("bookingForm");
-const statusText = document.getElementById("status");
+const popup = document.getElementById("popup");
+const closePopup = document.getElementById("closePopup");
+const button = form.querySelector("button");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  button.disabled = true;
+  button.innerText = "Отправляем...";
 
   const data = {
     name: document.getElementById("name").value,
@@ -28,18 +33,23 @@ form.addEventListener("submit", async (e) => {
   try {
     const response = await fetch("/book", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
 
     const result = await response.json();
-    statusText.innerText = result.message;
+
+    popup.classList.remove("hidden");
     form.reset();
 
   } catch (error) {
-    console.error(error);
-    statusText.innerText = "Ошибка отправки. Попробуйте позже.";
+    alert("Ошибка отправки. Попробуйте позже.");
   }
+
+  button.disabled = false;
+  button.innerText = "Отправить заявку";
+});
+
+closePopup.addEventListener("click", () => {
+  popup.classList.add("hidden");
 });
