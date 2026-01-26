@@ -9,17 +9,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// 🔐 логин / пароль админа
+// ===== ADMIN =====
 const ADMIN_LOGIN = "admin";
 const ADMIN_PASSWORD = "12345";
 
-// 🔐 Telegram из env (Render Environment Variables)
+// ===== TELEGRAM (из ENV) =====
 const TOKEN = process.env.BOT_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 
+if (!TOKEN || !CHAT_ID) {
+  console.error("❌ BOT_TOKEN или CHAT_ID не заданы в Environment Variables");
+}
+
 const bot = new TelegramBot(TOKEN, { polling: false });
 
-// база данных
+// ===== DATABASE =====
 const db = new sqlite3.Database("./patients.db");
 
 db.run(`
@@ -32,19 +36,19 @@ CREATE TABLE IF NOT EXISTS patients (
 )
 `);
 
-// логин
+// ===== LOGIN =====
 app.post("/login", (req, res) => {
   const { login, password } = req.body;
 
   if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
-    res.json({ success: true });
+    return res.json({ success: true });
   } else {
-    res.status(401).json({ success: false });
+    return res.status(401).json({ success: false });
   }
 });
 
-// сохранить заявку
-app.post("/book", (req, res) => {
+// ===== BOOK FORM =====
+app.post("/book", async (req, res) => {
   const { name, phone, email } = req.body;
 
   if (!name || !phone) {
@@ -67,30 +71,31 @@ Email: ${email || "-"}`;
 
       try {
         await bot.sendMessage(CHAT_ID, message);
-        res.json({ message: "Заявка успешно отправлена!" });
+        return res.json({ message: "Заявка успешно отправлена!" });
       } catch (e) {
         console.error("Telegram error:", e);
-        res.json({ message: "Заявка сохранена, Telegram временно недоступен" });
+        return res.json({ message: "Заявка сохранена, Telegram временно недоступен" });
       }
     }
   );
 });
 
-// получить всех
+// ===== GET PATIENTS =====
 app.get("/patients", (req, res) => {
   db.all("SELECT * FROM patients ORDER BY created_at DESC", (err, rows) => {
+    if (err) return res.status(500).json([]);
     res.json(rows);
   });
 });
 
-// удалить пациента
+// ===== DELETE PATIENT =====
 app.delete("/patients/:id", (req, res) => {
   db.run("DELETE FROM patients WHERE id = ?", [req.params.id], () => {
     res.json({ success: true });
   });
 });
 
-// экспорт CSV
+// ===== EXPORT CSV =====
 app.get("/export", (req, res) => {
   db.all("SELECT * FROM patients", (err, rows) => {
     let csv = "ID,Имя,Телефон,Email,Дата\n";
@@ -105,13 +110,14 @@ app.get("/export", (req, res) => {
   });
 });
 
-// админка
+// ===== ADMIN PAGE =====
 app.get("/admin", (req, res) => {
   res.sendFile(path.join(__dirname, "admin.html"));
 });
 
+// ===== START SERVER =====
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("Server running on port " + PORT);
+  console.log("✅ Server running on port " + PORT);
 });
