@@ -1,14 +1,9 @@
 const express = require("express");
 const path = require("path");
 
-// fetch для Node
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===== ENV =====
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
@@ -28,7 +23,6 @@ function rateLimit(req, res, next) {
   const now = Date.now();
 
   if (!requests[ip]) requests[ip] = [];
-
   requests[ip] = requests[ip].filter(time => now - time < 60000);
 
   if (requests[ip].length >= 3) {
@@ -53,25 +47,20 @@ function validateEmail(email) {
 app.post("/send", rateLimit, async (req, res) => {
   const { name, phone, email } = req.body;
 
-  if (!name || name.length < 2) {
+  if (!name || name.length < 2)
     return res.status(400).json({ error: "Некорректное имя" });
-  }
 
-  if (!validatePhone(phone)) {
+  if (!validatePhone(phone))
     return res.status(400).json({ error: "Некорректный телефон" });
-  }
 
-  if (!validateEmail(email)) {
+  if (!validateEmail(email))
     return res.status(400).json({ error: "Некорректный email" });
-  }
 
-  if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT_ID) {
+  if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT_ID)
     return res.status(500).json({ error: "Telegram не настроен" });
-  }
 
   const message = `
 🦷 Новая заявка:
-
 👤 Имя: ${name}
 📞 Телефон: ${phone}
 📧 Email: ${email || "не указан"}
@@ -80,7 +69,7 @@ app.post("/send", rateLimit, async (req, res) => {
   try {
     const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
-    await fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -89,15 +78,16 @@ app.post("/send", rateLimit, async (req, res) => {
       })
     });
 
-    res.json({ message: "Заявка успешно отправлена!" });
+    if (!response.ok) throw new Error("Telegram API error");
+
+    res.json({ success: true });
 
   } catch (err) {
-    console.error("Telegram error:", err);
+    console.error(err);
     res.status(500).json({ error: "Ошибка отправки" });
   }
 });
 
-// ===== START =====
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });

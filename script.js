@@ -1,4 +1,4 @@
-// ===== АНИМАЦИИ reveal =====
+// ===== ANIMATION reveal =====
 const reveals = document.querySelectorAll('.reveal');
 
 function reveal() {
@@ -11,17 +11,18 @@ function reveal() {
 window.addEventListener('scroll', reveal);
 reveal();
 
-
 const form = document.getElementById("bookingForm");
 const statusText = document.getElementById("status");
-
 const phoneInput = document.getElementById("phone");
+
 const popup = document.getElementById("popup");
 const closePopup = document.getElementById("closePopup");
 
 // ===== PHONE MASK =====
 phoneInput.addEventListener("input", () => {
-  let x = phoneInput.value.replace(/\D/g, "").slice(1);
+  let x = phoneInput.value.replace(/\D/g, "");
+
+  if (x.startsWith("7")) x = x.slice(1);
 
   let formatted = "+7 (";
   if (x.length > 0) formatted += x.substring(0, 3);
@@ -57,9 +58,7 @@ form.addEventListener("submit", async (e) => {
   try {
     const response = await fetch("/send", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, phone, email })
     });
 
