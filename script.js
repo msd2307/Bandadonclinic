@@ -1,4 +1,4 @@
-// Анимации reveal
+// ===== АНИМАЦИИ reveal =====
 const reveals = document.querySelectorAll('.reveal');
 
 function reveal() {
@@ -8,21 +8,34 @@ function reveal() {
     }
   });
 }
+
 window.addEventListener('scroll', reveal);
 reveal();
 
 
+// ===== АНТИСПАМ =====
+let lastSubmitTime = 0;
+const COOLDOWN = 10000; // 10 секунд
+
+
+// ===== ФОРМА =====
 const form = document.getElementById("bookingForm");
 const statusText = document.getElementById("status");
-const submitBtn = document.querySelector("button");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  const now = Date.now();
+  if (now - lastSubmitTime < COOLDOWN) {
+    statusText.innerText = "Подождите 10 секунд перед повторной отправкой";
+    return;
+  }
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("email").value.trim();
 
+  // ===== ВАЛИДАЦИЯ =====
   const phoneRegex = /^\+?[0-9]{10,15}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -41,7 +54,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  submitBtn.disabled = true;
+  statusText.innerText = "Отправка...";
 
   try {
     const response = await fetch("/book", {
@@ -51,15 +64,17 @@ form.addEventListener("submit", async (e) => {
     });
 
     const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Ошибка сервера");
+    }
+
     statusText.innerText = result.message;
     form.reset();
-
-    setTimeout(() => {
-      submitBtn.disabled = false;
-    }, 30000);
+    lastSubmitTime = now;
 
   } catch (error) {
-    statusText.innerText = "Ошибка отправки. Попробуйте позже.";
-    submitBtn.disabled = false;
+    console.error("Fetch error:", error);
+    statusText.innerText = "Ошибка соединения с сервером";
   }
 });
