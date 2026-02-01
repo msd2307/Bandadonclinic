@@ -1,53 +1,51 @@
-const modal = document.getElementById("modal");
+const popup=document.getElementById("popup");
+const form=document.getElementById("form");
+const phone=document.getElementById("phone");
+const status=document.getElementById("status");
 
-function openModal() {
-  modal.style.display = "flex";
-}
-
-function closeModal() {
-  modal.style.display = "none";
-}
+function openForm(){popup.classList.remove("hidden");}
+function closeForm(){popup.classList.add("hidden");}
 
 // phone mask
-const phoneInput = document.getElementById("phone");
-IMask(phoneInput, {
-  mask: "+{7} (000) 000-00-00"
+phone.addEventListener("input",()=>{
+  let x=phone.value.replace(/\D/g,"");
+  let f="+7 (";
+  if(x.length>0)f+=x.substring(0,3);
+  if(x.length>=3)f+=") ";
+  if(x.length>3)f+=x.substring(3,6);
+  if(x.length>=6)f+="-";
+  if(x.length>6)f+=x.substring(6,8);
+  if(x.length>=8)f+="-";
+  if(x.length>8)f+=x.substring(8,10);
+  phone.value=f;
 });
 
-// animation
-const elements = document.querySelectorAll(".fade-in");
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }
-  });
-});
-elements.forEach(el=>observer.observe(el));
-
-// form submit
-const form = document.getElementById("contactForm");
-const status = document.getElementById("status");
-
-form.addEventListener("submit", async e=>{
+form.addEventListener("submit",async e=>{
   e.preventDefault();
-
-  const name = document.getElementById("name").value;
-  const phone = phoneInput.value;
-  const email = document.getElementById("email").value;
-
-  status.textContent = "Отправка...";
-
-  const res = await fetch("/send",{
+  status.textContent="Отправка...";
+  const res=await fetch("/send",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ name, phone, email })
+    body:JSON.stringify({
+      name:document.getElementById("name").value,
+      phone:phone.value,
+      email:document.getElementById("email").value
+    })
   });
-
   if(res.ok){
-    status.textContent = "Заявка отправлена!";
+    status.textContent="Спасибо! Мы свяжемся с вами";
+    setTimeout(closeForm,2000);
     form.reset();
-  } else {
-    status.textContent = "Ошибка отправки";
+  }else{
+    status.textContent="Ошибка отправки";
   }
 });
+
+// reviews slider
+let i=0;
+const reviews=document.querySelectorAll(".review");
+setInterval(()=>{
+  reviews.forEach(r=>r.classList.remove("active"));
+  i=(i+1)%reviews.length;
+  reviews[i].classList.add("active");
+},3000);
