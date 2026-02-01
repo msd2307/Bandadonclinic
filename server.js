@@ -1,138 +1,94 @@
-require("dotenv").config();
-
 const express = require("express");
-const cors = require("cors");
-const sqlite3 = require("sqlite3").verbose();
+const fetch = require("node-fetch");
 const path = require("path");
-const TelegramBot = require("node-telegram-bot-api");
 
 const app = express();
-app.use(cors());
+const PORT = process.env.PORT || 3000;
+
+// ====== ENV ======
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+// ====== MIDDLEWARE ======
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, "public")));
 
-// ===== ENV =====
-const ADMIN_LOGIN = process.env.ADMIN_LOGIN || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "12345";
-const TOKEN = process.env.BOT_TOKEN;
-const CHAT_ID = process.env.CHAT_ID;
+// ====== ANTI SPAM (IP LIMIT) ======
+const requests = {};
 
-if (!TOKEN || !CHAT_ID) {
-  console.error("❌ BOT_TOKEN или CHAT_ID не заданы");
+function rateLimit(req, res, next) {
+  const ip = req.ip;
+  const now = Date.now();
+
+  if (!requests[ip]) {
+    requests[ip] = [];
+  }
+
+  requests[ip] = requests[ip].filter(time => now - time < 60000);
+
+  if (requests[ip].length >= 3) {
+    return res.status(429).json({ error: "Слишком много запросов" });
+  }
+
+  requests[ip].push(now);
+  next();
 }
 
-const bot = new TelegramBot(TOKEN, { polling: false });
+// ====== VALIDATION ======
+function validatePhone(phone) {
+  return /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
+}
 
-// ===== DB =====
-const db = new sqlite3.Database("./patients.db");
+function validateEmail(email) {
+  if (!email) return true;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
-db.run(`
-CREATE TABLE IF NOT EXISTS patients (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT,
-  phone TEXT,
-  email TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-)
-`);
-
-// ===== антиспам по IP =====
-const lastRequest = {};
-
-// ===== LOGIN =====
-app.post("/login", (req, res) => {
-  const { login, password } = req.body;
-
-  if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
-    res.json({ success: true });
-  } else {
-    res.status(401).json({ success: false });
-  }
-});
-
-// ===== BOOK =====
-app.post("/book", async (req, res) => {
+// ====== FORM ENDPOINT ======
+app.post("/send", rateLimit, async (req, res) => {
   const { name, phone, email } = req.body;
-  const ip = req.ip;
 
-  // антиспам 30 сек
-  if (lastRequest[ip] && Date.now() - lastRequest[ip] < 30000) {
-    return res.status(429).json({ message: "Подождите 30 секунд перед повторной отправкой" });
-  }
-  lastRequest[ip] = Date.now();
-
-  // валидация
-  if (!name || !phone) {
-    return res.status(400).json({ message: "Введите имя и телефон" });
+  if (!name || name.length < 2) {
+    return res.status(400).json({ error: "Некорректное имя" });
   }
 
-  const phoneRegex = /^\+?[0-9\s\-()]{10,15}$/;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!phoneRegex.test(phone)) {
-    return res.status(400).json({ message: "Неверный формат телефона" });
+  if (!validatePhone(phone)) {
+    return res.status(400).json({ error: "Некорректный телефон" });
   }
 
-  if (email && !emailRegex.test(email)) {
-    return res.status(400).json({ message: "Неверный формат email" });
+  if (!validateEmail(email)) {
+    return res.status(400).json({ error: "Некорректный email" });
   }
 
-  db.run(
-    "INSERT INTO patients (name, phone, email) VALUES (?, ?, ?)",
-    [name, phone, email],
-    async (err) => {
-      if (err) {
-        console.error("DB error:", err);
-        return res.status(500).json({ message: "Ошибка базы данных" });
-      }
+  const message = `
+🦷 Новая заявка:
 
-      const message = `🦷 Новая заявка!
-Имя: ${name}
-Телефон: ${phone}
-Email: ${email || "-"}`;
+👤 Имя: ${name}
+📞 Телефон: ${phone}
+📧 Email: ${email || "не указан"}
+`;
 
-      try {
-        await bot.sendMessage(CHAT_ID, message);
-        res.json({ success: true, message: "Заявка успешно отправлена!" });
-      } catch (e) {
-        console.error("Telegram error:", e);
-        res.json({ success: true, message: "Заявка сохранена, Telegram временно недоступен" });
-      }
-    }
-  );
-});
+  try {
+    const telegramURL = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
-// ===== ADMIN DATA =====
-app.get("/patients", (req, res) => {
-  db.all("SELECT * FROM patients ORDER BY created_at DESC", (err, rows) => {
-    res.json(rows);
-  });
-});
-
-app.delete("/patients/:id", (req, res) => {
-  db.run("DELETE FROM patients WHERE id = ?", [req.params.id], () => {
-    res.json({ success: true });
-  });
-});
-
-app.get("/export", (req, res) => {
-  db.all("SELECT * FROM patients", (err, rows) => {
-    let csv = "ID,Имя,Телефон,Email,Дата\n";
-    rows.forEach(p => {
-      csv += `${p.id},${p.name},${p.phone},${p.email},${p.created_at}\n`;
+    await fetch(telegramURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message
+      })
     });
 
-    res.header("Content-Type", "text/csv");
-    res.attachment("patients.csv");
-    res.send(csv);
-  });
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error("Ошибка Telegram:", err);
+    res.status(500).json({ error: "Ошибка сервера" });
+  }
 });
 
-app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "admin.html"));
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log("✅ Server running on port " + PORT);
+// ====== START ======
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });
