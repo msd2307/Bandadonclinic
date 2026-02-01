@@ -1,46 +1,43 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Bandadon Clinic</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Bandadon Clinic</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="hero">
-  <div class="hero-content fade-up">
+<section class="hero">
+  <div class="overlay"></div>
+  <div class="content fade-in">
     <h1>Bandadon Clinic</h1>
     <p>Современная стоматология — забота о вашей улыбке</p>
-    <button class="btn" onclick="scrollToForm()">Записаться</button>
+    <button onclick="scrollToForm()">Записаться</button>
   </div>
-</div>
-
-<section>
-<h2 class="fade-up">Наши услуги</h2>
-
-<div class="services">
-  <div class="card fade-up">🦷 Лечение зубов</div>
-  <div class="card fade-up">😁 Отбеливание</div>
-  <div class="card fade-up">🪥 Профилактика</div>
-  <div class="card fade-up">😷 Имплантация</div>
-</div>
 </section>
 
-<section id="form">
-<h2 class="fade-up">Записаться на приём</h2>
+<section class="services fade-in">
+  <h2>Наши услуги</h2>
+  <div class="cards">
+    <div class="card">🦷 Лечение зубов</div>
+    <div class="card">😁 Отбеливание</div>
+    <div class="card">🛡 Профилактика</div>
+    <div class="card">🦷 Имплантация</div>
+  </div>
+</section>
 
-<div class="form-box fade-up">
-  <input id="name" placeholder="Ваше имя">
-  <input id="phone" placeholder="Телефон">
-  <input id="email" placeholder="Email (необязательно)">
-  <button class="btn" onclick="send()">Отправить</button>
-  <p id="msg"></p>
-</div>
+<section class="form-section fade-in" id="form">
+  <h2>Записаться на приём</h2>
+  <form id="contactForm">
+    <input type="text" placeholder="Ваше имя" required>
+    <input type="tel" placeholder="Телефон" required>
+    <input type="email" placeholder="Email (необязательно)">
+    <button type="submit">Отправить</button>
+  </form>
 </section>
 
 <footer>
-© 2026 Bandadon Clinic
+  © 2026 Bandadon Clinic
 </footer>
 
 <script src="script.js"></script>
