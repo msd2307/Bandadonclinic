@@ -1,93 +1,125 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const sqlite3 = require("sqlite3").verbose();
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-
-// ===== MIDDLEWARE =====
 app.use(express.json());
 app.use(express.static(__dirname));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// ===== DB =====
+const db = new sqlite3.Database("./db.sqlite");
+
+db.run(`
+CREATE TABLE IF NOT EXISTS patients(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  phone TEXT,
+  email TEXT,
+  created_at TEXT
+)
+`);
+
+// ===== ROUTES =====
+app.get("/", (req,res)=>{
+  res.sendFile(path.join(__dirname,"index.html"));
 });
 
-// ===== ANTI SPAM =====
-const requests = {};
+app.get("/admin", (req,res)=>{
+  res.sendFile(path.join(__dirname,"admin.html"));
+});
 
-function rateLimit(req, res, next) {
-  const ip = req.ip;
-  const now = Date.now();
+// ===== LOGIN =====
+app.post("/login", async (req,res)=>{
+  const {login,password} = req.body;
 
-  if (!requests[ip]) requests[ip] = [];
-  requests[ip] = requests[ip].filter(time => now - time < 60000);
-
-  if (requests[ip].length >= 3) {
-    return res.status(429).json({ error: "Слишком много заявок. Подождите минуту." });
+  if(login !== process.env.ADMIN_LOGIN){
+    return res.status(401).json({error:"bad login"});
   }
 
-  requests[ip].push(now);
-  next();
-}
+  const ok = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
+  if(!ok){
+    return res.status(401).json({error:"bad password"});
+  }
 
-// ===== VALIDATION =====
-function validatePhone(phone) {
-  return /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
-}
+  const token = jwt.sign(
+    {role:"admin"},
+    process.env.JWT_SECRET,
+    {expiresIn:"2h"}
+  );
 
-function validateEmail(email) {
-  if (!email) return true;
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  res.json({token});
+});
+
+// ===== AUTH =====
+function auth(req,res,next){
+  const header = req.headers.authorization;
+  if(!header) return res.sendStatus(401);
+
+  const token = header.split(" ")[1];
+  try{
+    jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  }catch(err){
+    return res.sendStatus(403);
+  }
 }
 
 // ===== FORM =====
-app.post("/send", rateLimit, async (req, res) => {
-  const { name, phone, email } = req.body;
+app.post("/send", async (req,res)=>{
+  const {name,phone,email} = req.body;
+  const date = new Date().toLocaleString();
 
-  if (!name || name.length < 2)
-    return res.status(400).json({ error: "Некорректное имя" });
+  db.run(
+    "INSERT INTO patients(name,phone,email,created_at) VALUES(?,?,?,?)",
+    [name,phone,email,date]
+  );
 
-  if (!validatePhone(phone))
-    return res.status(400).json({ error: "Некорректный телефон" });
+  const text = `🦷 Новая заявка:\nИмя: ${name}\nТелефон: ${phone}\nEmail: ${email||"-"}`;
 
-  if (!validateEmail(email))
-    return res.status(400).json({ error: "Некорректный email" });
+  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      chat_id: process.env.TELEGRAM_CHAT_ID,
+      text
+    })
+  });
 
-  if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT_ID)
-    return res.status(500).json({ error: "Telegram не настроен" });
-
-  const message = `
-🦷 Новая заявка:
-👤 Имя: ${name}
-📞 Телефон: ${phone}
-📧 Email: ${email || "не указан"}
-`;
-
-  try {
-    const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: message
-      })
-    });
-
-    if (!response.ok) throw new Error("Telegram API error");
-
-    res.json({ success: true });
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Ошибка отправки" });
-  }
+  res.json({success:true});
 });
 
-app.listen(PORT, () => {
+// ===== ADMIN API =====
+app.get("/patients", auth, (req,res)=>{
+  db.all("SELECT * FROM patients ORDER BY id DESC",(err,rows)=>{
+    if(err) return res.status(500).json(err);
+    res.json(rows);
+  });
+});
+
+app.delete("/patients/:id", auth, (req,res)=>{
+  db.run("DELETE FROM patients WHERE id=?",[req.params.id]);
+  res.json({success:true});
+});
+
+app.get("/export", auth, (req,res)=>{
+  db.all("SELECT * FROM patients",(err,rows)=>{
+    let csv = "ID,Name,Phone,Email,Date\n";
+    rows.forEach(r=>{
+      csv += `${r.id},${r.name},${r.phone},${r.email},${r.created_at}\n`;
+    });
+
+    res.setHeader("Content-Type","text/csv");
+    res.setHeader("Content-Disposition","attachment; filename=patients.csv");
+    res.send(csv);
+  });
+});
+
+// ===== START =====
+app.listen(PORT, ()=>{
   console.log("Server running on port", PORT);
 });

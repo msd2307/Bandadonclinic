@@ -2,33 +2,22 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Админка клиники</title>
-<link rel="stylesheet" href="style.css">
-<style>
-body { background:#f8fbff; }
-.box { max-width:1000px;margin:60px auto;background:#fff;padding:30px;border-radius:20px; }
-table { width:100%;border-collapse:collapse;margin-top:20px; }
-th,td { padding:10px;border-bottom:1px solid #ddd; }
-button { padding:6px 10px;border:none;border-radius:6px;cursor:pointer;}
-.delete { background:#ef4444;color:white;}
-.login { max-width:400px;margin:100px auto;background:white;padding:30px;border-radius:20px;}
-</style>
+<title>Админка</title>
 </head>
 <body>
 
-<div id="loginBox" class="login">
-<h2>🔐 Вход</h2>
-<input id="login" placeholder="Логин"><br><br>
-<input id="password" type="password" placeholder="Пароль"><br><br>
+<div id="loginBox">
+<h2>Вход</h2>
+<input id="login" placeholder="логин"><br><br>
+<input id="password" type="password" placeholder="пароль"><br><br>
 <button onclick="login()">Войти</button>
-<p id="error" style="color:red"></p>
+<p id="error"></p>
 </div>
 
-<div id="adminBox" class="box" style="display:none;">
-<h1>📋 Заявки</h1>
-<button onclick="exportCSV()">📥 Экспорт в Excel</button>
-
-<table>
+<div id="adminBox" style="display:none;">
+<h2>Заявки</h2>
+<button onclick="exportCSV()">Экспорт</button>
+<table border="1">
 <thead>
 <tr>
 <th>ID</th><th>Имя</th><th>Телефон</th><th>Email</th><th>Дата</th><th></th>
@@ -39,6 +28,8 @@ button { padding:6px 10px;border:none;border-radius:6px;cursor:pointer;}
 </div>
 
 <script>
+let token = "";
+
 async function login(){
   const login = document.getElementById("login").value;
   const password = document.getElementById("password").value;
@@ -49,41 +40,48 @@ async function login(){
     body:JSON.stringify({login,password})
   });
 
-  if(res.ok){
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("adminBox").style.display="block";
-    loadPatients();
-  } else {
-    document.getElementById("error").innerText="Неверный логин или пароль";
+  if(!res.ok){
+    document.getElementById("error").innerText="Ошибка входа";
+    return;
   }
+
+  const data = await res.json();
+  token = data.token;
+
+  document.getElementById("loginBox").style.display="none";
+  document.getElementById("adminBox").style.display="block";
+  loadPatients();
 }
 
 async function loadPatients(){
-  const res = await fetch("/patients");
-  const data = await res.json();
+  const res = await fetch("/patients",{
+    headers:{Authorization:"Bearer "+token}
+  });
 
+  const data = await res.json();
   const table = document.getElementById("table");
   table.innerHTML="";
 
   data.forEach(p=>{
-    const tr=document.createElement("tr");
-    tr.innerHTML=`
-      <td>${p.id}</td>
-      <td>${p.name}</td>
-      <td>${p.phone}</td>
-      <td>${p.email||""}</td>
-      <td>${p.created_at}</td>
-      <td><button class="delete" onclick="del(${p.id})">Удалить</button></td>
+    table.innerHTML += `
+      <tr>
+        <td>${p.id}</td>
+        <td>${p.name}</td>
+        <td>${p.phone}</td>
+        <td>${p.email||""}</td>
+        <td>${p.created_at}</td>
+        <td><button onclick="del(${p.id})">Удалить</button></td>
+      </tr>
     `;
-    table.appendChild(tr);
   });
 }
 
 async function del(id){
-  if(confirm("Удалить заявку?")){
-    await fetch("/patients/"+id,{method:"DELETE"});
-    loadPatients();
-  }
+  await fetch("/patients/"+id,{
+    method:"DELETE",
+    headers:{Authorization:"Bearer "+token}
+  });
+  loadPatients();
 }
 
 function exportCSV(){
