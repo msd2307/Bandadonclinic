@@ -1,29 +1,27 @@
-const form = document.getElementById("contactForm");
-const status = document.getElementById("status");
+function scrollToForm(){
+  document.getElementById("form").scrollIntoView({behavior:"smooth"});
+}
 
-form.addEventListener("submit", async (e) => {
+document.getElementById("contactForm").addEventListener("submit", async e=>{
   e.preventDefault();
 
+  const form = e.target;
   const data = {
     name: form.name.value,
     phone: form.phone.value,
     email: form.email.value
   };
 
-  const res = await fetch("/send", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify(data)
+  const res = await fetch("/send",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(data)
   });
 
   if(res.ok){
-    status.innerText = "Заявка отправлена!";
+    document.getElementById("status").innerText="Заявка отправлена!";
     form.reset();
   } else {
-    status.innerText = "Ошибка отправки";
+    document.getElementById("status").innerText="Ошибка отправки";
   }
 });
-
-function scrollToForm(){
-  document.getElementById("form").scrollIntoView({behavior:"smooth"});
-}

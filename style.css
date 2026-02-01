@@ -1,95 +1,104 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #222;
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f6fb;
+}
+
+header {
+position:fixed;
+top:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-between;
+padding:15px 40px;
+box-shadow:0 2px 10px rgba(0,0,0,.1);
+z-index:1000;
+}
+
+nav a {
+margin-left:20px;
+text-decoration:none;
+color:#333;
+font-weight:bold;
 }
 
 .hero {
-  background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)),
-              url("https://images.unsplash.com/featured/?dentist") center/cover;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
+height:90vh;
+background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),
+url("https://images.unsplash.com/featured/?dentist") center/cover;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
 }
 
+.hero h1 {font-size:48px;}
 .hero button {
-  padding: 15px 30px;
-  font-size: 18px;
-  background: red;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+padding:15px 30px;
+font-size:18px;
+background:#ff3b3b;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
 }
 
 section {
-  padding: 50px 10%;
-  text-align: center;
+padding:80px 10%;
+text-align:center;
 }
 
 .features {
-  display: flex;
-  justify-content: space-around;
-  background: white;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
 }
 
-.feature {
-  padding: 20px;
-  font-weight: bold;
+.card {
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
-.service-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
-  gap: 20px;
+.grid {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
 }
 
-.service {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+.box,.review {
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 10px rgba(0,0,0,.1);
 }
 
 .price {
-  background: #1e3a8a;
-  color: white;
+background:#eaf0ff;
 }
 
-.price button {
-  background: red;
-  padding: 15px 25px;
-  border: none;
-  border-radius: 8px;
-  color: white;
+.form input, .form button {
+width:100%;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ccc;
 }
 
-.review-list {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+.form button {
+background:#2563eb;
+color:white;
+font-size:18px;
+border:none;
 }
 
-.review {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.form-section input {
-  display: block;
-  margin: 10px auto;
-  padding: 12px;
-  width: 300px;
-}
-
-.form-section button {
-  padding: 12px 25px;
-  background: green;
-  color: white;
-  border: none;
-  border-radius: 8px;
+footer {
+background:#111;
+color:white;
+padding:20px;
+text-align:center;
 }
