@@ -1,126 +1,88 @@
-const form = document.getElementById("bookingForm");
-const statusText = document.getElementById("status");
-const popup = document.getElementById("popup");
-const closePopupBtn = document.getElementById("closePopup");
-const phoneInput = document.getElementById("phone");
+// ===== АНИМАЦИИ reveal =====
+const reveals = document.querySelectorAll('.reveal');
 
-phoneInput.addEventListener("input", () => {
-  let value = phoneInput.value.replace(/\D/g, "");
+function reveal() {
+  reveals.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 120) {
+      el.classList.add('active');
+    }
+  });
+}
+window.addEventListener('scroll', reveal);
+reveal();
 
-  if (value.startsWith("8")) value = "7" + value.slice(1);
-  if (!value.startsWith("7")) value = "7" + value;
-
-  let formatted = "+7";
-
-  if (value.length > 1) formatted += " (" + value.substring(1,4);
-  if (value.length >= 5) formatted += ") " + value.substring(4,7);
-  if (value.length >= 8) formatted += "-" + value.substring(7,9);
-  if (value.length >= 10) formatted += "-" + value.substring(9,11);
-
-  phoneInput.value = formatted;
-});
-
-
-let lastSubmitTime = 0;
-const COOLDOWN = 30000; // 30 секунд защита от спама
 
 // ===== POPUP =====
+const popup = document.getElementById("popup");
+const closePopup = document.getElementById("closePopup");
+
 function showPopup() {
   popup.classList.remove("hidden");
 }
 
-function hidePopup() {
+closePopup.addEventListener("click", () => {
   popup.classList.add("hidden");
+});
+
+
+// ===== МАСКА ТЕЛЕФОНА =====
+const phoneInput = document.getElementById("phone");
+
+phoneInput.addEventListener("input", maskPhone);
+
+function maskPhone(e) {
+  let x = e.target.value.replace(/\D/g, "").slice(0, 11);
+
+  if (x.startsWith("8")) x = "7" + x.slice(1);
+
+  let formatted = "+7";
+
+  if (x.length > 1) formatted += " (" + x.substring(1, 4);
+  if (x.length >= 4) formatted += ")";
+  if (x.length >= 4) formatted += " " + x.substring(4, 7);
+  if (x.length >= 7) formatted += "-" + x.substring(7, 9);
+  if (x.length >= 9) formatted += "-" + x.substring(9, 11);
+
+  e.target.value = formatted;
 }
 
-closePopupBtn.addEventListener("click", hidePopup);
 
-// ===== ANIMATION REVEAL =====
-const reveals = document.querySelectorAll(".reveal");
+// ===== ФОРМА =====
+const form = document.getElementById("bookingForm");
+const statusText = document.getElementById("status");
 
-function revealOnScroll() {
-  reveals.forEach(el => {
-    const windowHeight = window.innerHeight;
-    const elementTop = el.getBoundingClientRect().top;
-    const elementVisible = 100;
-
-    if (elementTop < windowHeight - elementVisible) {
-      el.classList.add("active");
-    }
-  });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll();
-
-// ===== VALIDATION =====
-function validatePhone(phone) {
-  const phoneRegex = /^\+?[0-9\s\-()]{10,15}$/;
-  return phoneRegex.test(phone);
-}
-
-function validateEmail(email) {
-  if (email.trim() === "") return true;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-// ===== FORM SUBMIT =====
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  const now = Date.now();
-  if (now - lastSubmitTime < COOLDOWN) {
-    statusText.textContent = "⏳ Подождите 30 секунд перед повторной отправкой.";
-    statusText.style.color = "red";
-    return;
-  }
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("email").value.trim();
 
-  if (name.length < 2) {
-    statusText.textContent = "Введите корректное имя";
-    statusText.style.color = "red";
+  // regex под формат: +7 (999) 999-99-99
+  const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+
+  if (!phoneRegex.test(phone)) {
+    statusText.innerText = "Введите корректный номер телефона";
     return;
   }
 
-  if (!validatePhone(phone)) {
-    statusText.textContent = "Введите корректный номер телефона";
-    statusText.style.color = "red";
-    return;
-  }
-
-  if (!validateEmail(email)) {
-    statusText.textContent = "Введите корректный email";
-    statusText.style.color = "red";
-    return;
-  }
-
-  statusText.textContent = "Отправка...";
-  statusText.style.color = "black";
+  const data = { name, phone, email };
 
   try {
-    const response = await fetch("/send", {
+    const response = await fetch("/book", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, phone, email })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     });
 
-    if (!response.ok) {
-      throw new Error("Ошибка сервера");
-    }
+    const result = await response.json();
 
-    form.reset();
-    statusText.textContent = "";
+    statusText.innerText = "";
     showPopup();
-    lastSubmitTime = now;
+    form.reset();
 
   } catch (error) {
-    statusText.textContent = "Ошибка отправки. Попробуйте позже.";
-    statusText.style.color = "red";
+    console.error("Ошибка:", error);
+    statusText.innerText = "Ошибка отправки. Попробуйте позже.";
   }
 });
