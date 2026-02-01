@@ -30,20 +30,28 @@ app.post("/send", async (req, res) => {
       })
     });
 
-const tgResponse = await fetch(
-  `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`,
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: process.env.TELEGRAM_CHAT_ID,
-      text
-    })
-  }
-);
+    // Telegram
+    const text = `🦷 Новая заявка:
+Имя: ${name}
+Телефон: ${phone}
+Email: ${email || "-"}`;
 
-const tgData = await tgResponse.text();
-console.log("Telegram response:", tgData);
+    await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: process.env.TELEGRAM_CHAT_ID,
+        text
+      })
+    });
+
+    res.json({ success: true });
+
+  } catch (error) {
+    console.error("Ошибка отправки:", error);
+    res.status(500).json({ success: false });
+  }
+});
 
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
