@@ -1,40 +1,61 @@
-// ===== Reveal animation =====
+const form = document.getElementById("bookingForm");
+const statusText = document.getElementById("status");
+
+const popup = document.getElementById("popup");
+const closePopupBtn = document.getElementById("closePopup");
+
+let lastSubmitTime = 0;
+const COOLDOWN = 30000; // 30 секунд защита от спама
+
+// ===== POPUP =====
+function showPopup() {
+  popup.classList.remove("hidden");
+}
+
+function hidePopup() {
+  popup.classList.add("hidden");
+}
+
+closePopupBtn.addEventListener("click", hidePopup);
+
+// ===== ANIMATION REVEAL =====
 const reveals = document.querySelectorAll(".reveal");
 
-function reveal() {
+function revealOnScroll() {
   reveals.forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 120) {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+    const elementVisible = 100;
+
+    if (elementTop < windowHeight - elementVisible) {
       el.classList.add("active");
     }
   });
 }
 
-window.addEventListener("scroll", reveal);
-reveal();
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
 
-// ===== Popup =====
-const popup = document.getElementById("popup");
-const closePopup = document.getElementById("closePopup");
-
-function showPopup() {
-  popup.classList.remove("hidden");
+// ===== VALIDATION =====
+function validatePhone(phone) {
+  const phoneRegex = /^\+?[0-9\s\-()]{10,15}$/;
+  return phoneRegex.test(phone);
 }
 
-closePopup.addEventListener("click", () => {
-  popup.classList.add("hidden");
-});
+function validateEmail(email) {
+  if (email.trim() === "") return true;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
 
-// ===== Form =====
-const form = document.getElementById("bookingForm");
-const statusText = document.getElementById("status");
-
-let canSend = true;
-
+// ===== FORM SUBMIT =====
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  if (!canSend) {
-    statusText.innerText = "Подождите 30 секунд перед повторной отправкой";
+  const now = Date.now();
+  if (now - lastSubmitTime < COOLDOWN) {
+    statusText.textContent = "⏳ Подождите 30 секунд перед повторной отправкой.";
+    statusText.style.color = "red";
     return;
   }
 
@@ -42,40 +63,47 @@ form.addEventListener("submit", async (e) => {
   const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("email").value.trim();
 
-  const phoneRegex = /^\+?[0-9\s\-()]{10,15}$/;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!phoneRegex.test(phone)) {
-    statusText.innerText = "Введите корректный номер телефона";
+  if (name.length < 2) {
+    statusText.textContent = "Введите корректное имя";
+    statusText.style.color = "red";
     return;
   }
 
-  if (email && !emailRegex.test(email)) {
-    statusText.innerText = "Введите корректный email";
+  if (!validatePhone(phone)) {
+    statusText.textContent = "Введите корректный номер телефона";
+    statusText.style.color = "red";
     return;
   }
 
-  const data = { name, phone, email };
+  if (!validateEmail(email)) {
+    statusText.textContent = "Введите корректный email";
+    statusText.style.color = "red";
+    return;
+  }
+
+  statusText.textContent = "Отправка...";
+  statusText.style.color = "black";
 
   try {
-    const response = await fetch("/book", {
+    const response = await fetch("/send", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, phone, email })
     });
 
-    const result = await response.json();
-
-    statusText.innerText = result.message;
-
-    if (result.success) {
-      showPopup();
-      form.reset();
-      canSend = false;
-      setTimeout(() => canSend = true, 30000);
+    if (!response.ok) {
+      throw new Error("Ошибка сервера");
     }
 
+    form.reset();
+    statusText.textContent = "";
+    showPopup();
+    lastSubmitTime = now;
+
   } catch (error) {
-    statusText.innerText = "Ошибка соединения с сервером";
+    statusText.textContent = "Ошибка отправки. Попробуйте позже.";
+    statusText.style.color = "red";
   }
 });
