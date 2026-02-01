@@ -1,45 +1,8 @@
-const elements = document.querySelectorAll(".fade-up");
-
-function showOnScroll(){
-  const trigger = window.innerHeight * 0.85;
-
-  elements.forEach(el=>{
-    const top = el.getBoundingClientRect().top;
-    if(top < trigger){
-      el.classList.add("show");
-    }
-  });
-}
-
-window.addEventListener("scroll", showOnScroll);
-showOnScroll();
-
-function scrollToForm(){
-  document.getElementById("form").scrollIntoView({behavior:"smooth"});
-}
-
-async function send(){
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const email = document.getElementById("email").value;
-
-  const res = await fetch("/send",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({name,phone,email})
-  });
-
-  if(res.ok){
-    document.getElementById("msg").innerText="✅ Заявка отправлена!";
-  } else {
-    document.getElementById("msg").innerText="❌ Ошибка отправки";
-  }
-}
 function scrollToForm() {
   document.getElementById("form").scrollIntoView({ behavior: "smooth" });
 }
 
-// animation on scroll
+// анимации
 const elements = document.querySelectorAll(".fade-in");
 
 const observer = new IntersectionObserver(entries => {
@@ -51,3 +14,30 @@ const observer = new IntersectionObserver(entries => {
 });
 
 elements.forEach(el => observer.observe(el));
+
+// форма
+const form = document.getElementById("contactForm");
+const status = document.getElementById("status");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+
+  status.textContent = "Отправка...";
+
+  const res = await fetch("/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, phone, email })
+  });
+
+  if (res.ok) {
+    status.textContent = "✅ Заявка отправлена!";
+    form.reset();
+  } else {
+    status.textContent = "❌ Ошибка отправки";
+  }
+});
