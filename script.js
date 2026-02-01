@@ -57,24 +57,28 @@ form.addEventListener("submit", async (e) => {
   statusText.innerText = "Отправка...";
 
   try {
-    const response = await fetch("/book", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone, email })
-    });
+      const response = await fetch("/book", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data)
+});
 
-    const result = await response.json();
+const result = await response.json();
 
-    if (!response.ok) {
-      throw new Error(result.message || "Ошибка сервера");
-    }
+if (response.ok) {
+  showPopup();
+  form.reset();
+} else {
+  status.textContent = result.message || "Ошибка отправки";
+}
 
-    statusText.innerText = result.message;
-    form.reset();
-    lastSubmitTime = now;
+const popup = document.getElementById("popup");
+const closePopup = document.getElementById("closePopup");
 
-  } catch (error) {
-    console.error("Fetch error:", error);
-    statusText.innerText = "Ошибка соединения с сервером";
-  }
+function showPopup() {
+  popup.classList.remove("hidden");
+}
+
+closePopup.addEventListener("click", () => {
+  popup.classList.add("hidden");
 });
