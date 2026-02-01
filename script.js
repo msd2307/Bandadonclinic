@@ -1,66 +1,45 @@
-// MODAL
 const modal = document.getElementById("modal");
 
-function openModal(){
-  modal.style.display="flex";
-}
+function openModal(){ modal.style.display="flex"; }
+function closeModal(){ modal.style.display="none"; }
 
-function closeModal(){
-  modal.style.display="none";
-}
+// phone mask
+IMask(document.getElementById("phone"),{
+  mask:"+{7} (000) 000-00-00"
+});
 
-// FAQ
-function toggleFAQ(el){
-  const p = el.nextElementSibling;
-  p.style.display = p.style.display==="block" ? "none" : "block";
-}
+// animation
+const items=document.querySelectorAll(".fade-in");
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+});
+items.forEach(i=>obs.observe(i));
 
-// MASK
-var phoneMask = IMask(
-  document.getElementById('phone'), {
-    mask: '+{7} (000) 000-00-00'
-  }
-);
+// form
+const form=document.getElementById("contactForm");
+const status=document.getElementById("status");
 
-// FORM SEND
-const form = document.getElementById("contactForm");
-const status = document.getElementById("status");
-
-form.addEventListener("submit", async (e)=>{
+form.addEventListener("submit",async e=>{
   e.preventDefault();
 
-  const data = {
-    name: name.value,
-    phone: phone.value,
-    email: email.value
-  };
+  const name=document.getElementById("name").value;
+  const phone=document.getElementById("phone").value;
+  const email=document.getElementById("email").value;
 
-  status.innerText = "Отправка...";
+  status.textContent="Отправка...";
 
-  const res = await fetch("/send",{
+  const res=await fetch("/send",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(data)
+    body:JSON.stringify({name,phone,email})
   });
 
   if(res.ok){
-    status.innerText="Заявка отправлена!";
+    status.textContent="Заявка отправлена!";
     form.reset();
-    setTimeout(closeModal,1500);
   } else {
-    status.innerText="Ошибка отправки";
+    status.textContent="Ошибка";
   }
 });
-
-// SCROLL ANIMATION
-const faders = document.querySelectorAll(".fade-in");
-
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }
-  });
-},{threshold:0.2});
-
-faders.forEach(el=>observer.observe(el));
