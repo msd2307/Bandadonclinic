@@ -1,27 +1,37 @@
+const elements = document.querySelectorAll(".fade-up");
+
+function showOnScroll(){
+  const trigger = window.innerHeight * 0.85;
+
+  elements.forEach(el=>{
+    const top = el.getBoundingClientRect().top;
+    if(top < trigger){
+      el.classList.add("show");
+    }
+  });
+}
+
+window.addEventListener("scroll", showOnScroll);
+showOnScroll();
+
 function scrollToForm(){
   document.getElementById("form").scrollIntoView({behavior:"smooth"});
 }
 
-document.getElementById("contactForm").addEventListener("submit", async e=>{
-  e.preventDefault();
-
-  const form = e.target;
-  const data = {
-    name: form.name.value,
-    phone: form.phone.value,
-    email: form.email.value
-  };
+async function send(){
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
 
   const res = await fetch("/send",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(data)
+    body:JSON.stringify({name,phone,email})
   });
 
   if(res.ok){
-    document.getElementById("status").innerText="Заявка отправлена!";
-    form.reset();
+    document.getElementById("msg").innerText="✅ Заявка отправлена!";
   } else {
-    document.getElementById("status").innerText="Ошибка отправки";
+    document.getElementById("msg").innerText="❌ Ошибка отправки";
   }
-});
+}

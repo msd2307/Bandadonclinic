@@ -2,80 +2,45 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Стоматология</title>
-<link rel="stylesheet" href="style.css">
+<title>Bandadon Clinic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
-  <div class="logo">🦷 Dental Clinic</div>
-  <nav>
-    <a href="#services">Услуги</a>
-    <a href="#price">Цены</a>
-    <a href="#reviews">Отзывы</a>
-    <a href="#form">Запись</a>
-  </nav>
-</header>
+<div class="hero">
+  <div class="hero-content fade-up">
+    <h1>Bandadon Clinic</h1>
+    <p>Современная стоматология — забота о вашей улыбке</p>
+    <button class="btn" onclick="scrollToForm()">Записаться</button>
+  </div>
+</div>
 
-<section class="hero">
-  <h1>Новая улыбка за 1 день</h1>
-  <p>Имплантация и лечение без боли</p>
-  <button onclick="scrollToForm()">Записаться</button>
-</section>
+<section>
+<h2 class="fade-up">Наши услуги</h2>
 
-<section class="features">
-  <div class="card">🦷 Современное оборудование</div>
-  <div class="card">😌 Без боли</div>
-  <div class="card">🛡️ Гарантия</div>
-</section>
-
-<section id="services">
-<h2>Наши услуги</h2>
-<div class="grid">
-<div class="box">Имплантация</div>
-<div class="box">Отбеливание</div>
-<div class="box">Кариес</div>
-<div class="box">Протезирование</div>
-<div class="box">Хирургия</div>
-<div class="box">Диагностика</div>
+<div class="services">
+  <div class="card fade-up">🦷 Лечение зубов</div>
+  <div class="card fade-up">😁 Отбеливание</div>
+  <div class="card fade-up">🪥 Профилактика</div>
+  <div class="card fade-up">😷 Имплантация</div>
 </div>
 </section>
 
-<section id="price" class="price">
-<h2>Цены</h2>
-<p>Имплантация от <b>99 000 ₽</b></p>
-<p>Отбеливание от <b>10 000 ₽</b></p>
-<button onclick="scrollToForm()">Получить консультацию</button>
-</section>
+<section id="form">
+<h2 class="fade-up">Записаться на приём</h2>
 
-<section id="reviews">
-<h2>Отзывы</h2>
-<div class="grid">
-<div class="review">⭐⭐⭐⭐⭐<br>Отличный сервис</div>
-<div class="review">⭐⭐⭐⭐⭐<br>Без боли</div>
-<div class="review">⭐⭐⭐⭐⭐<br>Рекомендую</div>
+<div class="form-box fade-up">
+  <input id="name" placeholder="Ваше имя">
+  <input id="phone" placeholder="Телефон">
+  <input id="email" placeholder="Email (необязательно)">
+  <button class="btn" onclick="send()">Отправить</button>
+  <p id="msg"></p>
 </div>
-</section>
-
-<section class="contacts">
-<h2>Контакты</h2>
-<p>📍 Москва, ул. Примерная 10</p>
-<p>📞 +7 (999) 123-45-67</p>
-</section>
-
-<section id="form" class="form">
-<h2>Записаться на приём</h2>
-<form id="contactForm">
-<input name="name" placeholder="Имя" required>
-<input name="phone" placeholder="Телефон" required>
-<input name="email" placeholder="Email">
-<button type="submit">Отправить</button>
-</form>
-<p id="status"></p>
 </section>
 
 <footer>
-© 2026 Dental Clinic
+© 2026 Bandadon Clinic
 </footer>
 
 <script src="script.js"></script>
