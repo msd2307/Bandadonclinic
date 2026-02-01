@@ -11,7 +11,7 @@
 <input id="login" placeholder="логин"><br><br>
 <input id="password" type="password" placeholder="пароль"><br><br>
 <button onclick="login()">Войти</button>
-<p id="error"></p>
+<p id="error" style="color:red"></p>
 </div>
 
 <div id="adminBox" style="display:none;">
@@ -28,7 +28,13 @@
 </div>
 
 <script>
-let token = "";
+let token = localStorage.getItem("token") || "";
+
+if(token){
+  document.getElementById("loginBox").style.display="none";
+  document.getElementById("adminBox").style.display="block";
+  loadPatients();
+}
 
 async function login(){
   const login = document.getElementById("login").value;
@@ -47,15 +53,21 @@ async function login(){
 
   const data = await res.json();
   token = data.token;
+  localStorage.setItem("token", token);
 
   document.getElementById("loginBox").style.display="none";
   document.getElementById("adminBox").style.display="block";
+
   loadPatients();
 }
 
 async function loadPatients(){
+  const token = localStorage.getItem("token");
+
   const res = await fetch("/patients",{
-    headers:{Authorization:"Bearer "+token}
+    headers:{
+      "Authorization":"Bearer "+token
+    }
   });
 
   const data = await res.json();
@@ -77,15 +89,21 @@ async function loadPatients(){
 }
 
 async function del(id){
+  const token = localStorage.getItem("token");
+
   await fetch("/patients/"+id,{
     method:"DELETE",
-    headers:{Authorization:"Bearer "+token}
+    headers:{
+      "Authorization":"Bearer "+token
+    }
   });
+
   loadPatients();
 }
 
 function exportCSV(){
-  window.location="/export";
+  const token = localStorage.getItem("token");
+  window.location = "/export?token=" + token;
 }
 </script>
 

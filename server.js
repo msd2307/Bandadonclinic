@@ -4,6 +4,7 @@ const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const fetch = require("node-fetch");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,41 +36,47 @@ app.get("/admin", (req,res)=>{
 
 // ===== LOGIN =====
 app.post("/login", async (req,res)=>{
-  const {login,password} = req.body;
+  const { login, password } = req.body;
 
   if(login !== process.env.ADMIN_LOGIN){
-    return res.status(401).json({error:"bad login"});
+    return res.sendStatus(401);
   }
 
   const ok = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
   if(!ok){
-    return res.status(401).json({error:"bad password"});
+    return res.sendStatus(401);
   }
 
   const token = jwt.sign(
-    {role:"admin"},
+    { role: "admin" },
     process.env.JWT_SECRET,
-    {expiresIn:"2h"}
+    { expiresIn: "2h" }
   );
 
-  res.json({token});
+  res.json({ token });
 });
 
-// ===== AUTH =====
+// ===== AUTH MIDDLEWARE =====
 function auth(req,res,next){
-  const header = req.headers.authorization;
-  if(!header) return res.sendStatus(401);
+  let token;
 
-  const token = header.split(" ")[1];
+  if(req.headers.authorization){
+    token = req.headers.authorization.split(" ")[1];
+  } else if(req.query.token){
+    token = req.query.token;
+  }
+
+  if(!token) return res.sendStatus(401);
+
   try{
     jwt.verify(token, process.env.JWT_SECRET);
     next();
-  }catch(err){
-    return res.sendStatus(403);
+  }catch{
+    res.sendStatus(403);
   }
 }
 
-// ===== FORM =====
+// ===== SAVE FORM =====
 app.post("/send", async (req,res)=>{
   const {name,phone,email} = req.body;
   const date = new Date().toLocaleString();
@@ -79,13 +86,13 @@ app.post("/send", async (req,res)=>{
     [name,phone,email,date]
   );
 
-  const text = `🦷 Новая заявка:\nИмя: ${name}\nТелефон: ${phone}\nEmail: ${email||"-"}`;
+  const text = `🦷 Новая заявка:\nИмя: ${name}\nТел: ${phone}\nEmail: ${email||"-"}`;
 
   await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({
-      chat_id: process.env.TELEGRAM_CHAT_ID,
+      chat_id:process.env.TELEGRAM_CHAT_ID,
       text
     })
   });
@@ -96,7 +103,6 @@ app.post("/send", async (req,res)=>{
 // ===== ADMIN API =====
 app.get("/patients", auth, (req,res)=>{
   db.all("SELECT * FROM patients ORDER BY id DESC",(err,rows)=>{
-    if(err) return res.status(500).json(err);
     res.json(rows);
   });
 });
@@ -120,6 +126,6 @@ app.get("/export", auth, (req,res)=>{
 });
 
 // ===== START =====
-app.listen(PORT, ()=>{
-  console.log("Server running on port", PORT);
+app.listen(PORT,()=>{
+  console.log("Server started on port", PORT);
 });
