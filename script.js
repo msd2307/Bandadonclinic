@@ -1,3 +1,17 @@
+// Анимации reveal
+const reveals = document.querySelectorAll('.reveal');
+
+function reveal() {
+  reveals.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 120) {
+      el.classList.add('active');
+    }
+  });
+}
+window.addEventListener('scroll', reveal);
+reveal();
+
+
 const form = document.getElementById("bookingForm");
 const statusText = document.getElementById("status");
 const submitBtn = document.querySelector("button");
