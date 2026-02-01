@@ -1,45 +1,49 @@
-const modal = document.getElementById("modal");
+// MODAL
+function openModal(){
+  document.getElementById("modal").style.display="flex";
+}
 
-function openModal(){ modal.style.display="flex"; }
-function closeModal(){ modal.style.display="none"; }
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
 
-// phone mask
-IMask(document.getElementById("phone"),{
-  mask:"+{7} (000) 000-00-00"
-});
+// PHONE MASK
+var phoneMask = IMask(
+  document.getElementById('phone'),
+  { mask: '+{7} (000) 000-00-00' }
+);
 
-// animation
-const items=document.querySelectorAll(".fade-in");
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add("show");
-  });
-});
-items.forEach(i=>obs.observe(i));
-
-// form
-const form=document.getElementById("contactForm");
-const status=document.getElementById("status");
-
-form.addEventListener("submit",async e=>{
+// FORM SEND
+document.getElementById("contactForm").addEventListener("submit", async function(e){
   e.preventDefault();
 
-  const name=document.getElementById("name").value;
-  const phone=document.getElementById("phone").value;
-  const email=document.getElementById("email").value;
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
 
-  status.textContent="Отправка...";
-
-  const res=await fetch("/send",{
+  const res = await fetch("/send",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({name,phone,email})
+    body: JSON.stringify({name,phone,email})
   });
 
   if(res.ok){
-    status.textContent="Заявка отправлена!";
-    form.reset();
+    document.getElementById("status").innerText="Заявка отправлена!";
+    this.reset();
   } else {
-    status.textContent="Ошибка";
+    document.getElementById("status").innerText="Ошибка отправки";
   }
+});
+
+// FADE IN ON SCROLL
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+});
+
+document.querySelectorAll(".fade-in").forEach(el=>{
+  observer.observe(el);
 });
