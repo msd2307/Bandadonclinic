@@ -1,62 +1,119 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Премиальная стоматология</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Bandadon Clinic</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- Telegram floating button -->
-<a href="https://t.me/ammsss77" class="tg-btn">Telegram</a>
+<!-- TELEGRAM BUTTON -->
+<a href="https://t.me/ammsss77" class="tg-btn" target="_blank">
+<i class="fa-brands fa-telegram"></i>
+</a>
 
-<header class="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1>Новая улыбка за 1 день</h1>
-    <p>Имплантация All-on-4 и виниры премиум-класса</p>
-    <button onclick="openForm()">Записаться на консультацию</button>
-  </div>
-</header>
+<!-- HEADER -->
+<header>
+<nav>
+  <div class="logo">Bandadon Clinic</div>
+  <ul>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#promo">Акции</a></li>
+    <li><a href="#faq">Вопросы</a></li>
+    <li><button onclick="openModal()">Записаться</button></li>
+  </ul>
+</nav>
 
-<section class="info">
-  <div class="card">
-    <h2>🦷 All-on-4</h2>
-    <p>Полное восстановление зубов за 1 день</p>
-    <strong>от 99 000 ₽</strong>
-  </div>
-  <div class="card">
-    <h2>✨ Виниры</h2>
-    <p>Идеальная улыбка за 7 дней</p>
-    <strong>от 8 000 ₽</strong>
-  </div>
-</section>
-
-<section class="reviews">
-  <h2>Отзывы пациентов</h2>
-  <div class="slider">
-    <div class="review active">⭐⭐⭐⭐⭐<br>«Очень доволен результатом!»<br><b>Алексей</b></div>
-    <div class="review">⭐⭐⭐⭐⭐<br>«Быстро и без боли»<br><b>Марина</b></div>
-    <div class="review">⭐⭐⭐⭐⭐<br>«Лучшая клиника»<br><b>Игорь</b></div>
-  </div>
-</section>
-
-<!-- Popup Form -->
-<div id="popup" class="popup hidden">
-  <div class="popup-content">
-    <h2>Записаться</h2>
-    <form id="form">
-      <input id="name" placeholder="Имя" required>
-      <input id="phone" placeholder="+7 (___) ___-__-__" required>
-      <input id="email" placeholder="Email (необязательно)">
-      <button type="submit">Отправить</button>
-      <p id="status"></p>
-    </form>
-    <button onclick="closeForm()">Закрыть</button>
+<div class="hero fade-in">
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>Современная стоматология</h1>
+    <p>All-on-4 от 99 000 ₽ · Виниры · Имплантация</p>
+    <button onclick="openModal()">Записаться на консультацию</button>
   </div>
 </div>
+</header>
 
+<!-- SERVICES -->
+<section id="services" class="fade-in">
+<h2>Наши услуги</h2>
+<div class="cards">
+  <div class="card"><i class="fa-solid fa-tooth"></i> Лечение зубов</div>
+  <div class="card"><i class="fa-solid fa-screwdriver-wrench"></i> Имплантация</div>
+  <div class="card"><i class="fa-solid fa-face-smile"></i> Виниры</div>
+  <div class="card"><i class="fa-solid fa-shield-heart"></i> Профилактика</div>
+</div>
+</section>
+
+<!-- PROMO -->
+<section id="promo" class="promo fade-in">
+<h2>Специальные предложения</h2>
+
+<div class="promo-cards">
+  <div class="promo-card">
+    <h3>All-on-4</h3>
+    <p>Полное восстановление улыбки за 1 день</p>
+    <span>от 99 000 ₽</span>
+    <button onclick="openModal()">Записаться</button>
+  </div>
+
+  <div class="promo-card">
+    <h3>Виниры</h3>
+    <p>Идеальная улыбка без брекетов</p>
+    <span>от 15 000 ₽</span>
+    <button onclick="openModal()">Записаться</button>
+  </div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="fade-in">
+<h2>Частые вопросы</h2>
+
+<div class="faq-item">
+<h4 onclick="toggleFAQ(this)">Больно ли лечить зубы?</h4>
+<p>Нет, используется современная анестезия.</p>
+</div>
+
+<div class="faq-item">
+<h4 onclick="toggleFAQ(this)">Сколько длится процедура?</h4>
+<p>От 30 минут до 2 часов.</p>
+</div>
+
+</section>
+
+<!-- MAP -->
+<section class="fade-in">
+<h2>Мы на карте</h2>
+<iframe src="https://maps.google.com/maps?q=Moscow&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+</section>
+
+<footer>
+© 2026 Bandadon Clinic
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<h2>Записаться</h2>
+
+<form id="contactForm">
+<input type="text" id="name" placeholder="Ваше имя" required>
+<input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+<input type="email" id="email" placeholder="Email (необязательно)">
+<button type="submit">Отправить</button>
+<p id="status"></p>
+</form>
+
+</div>
+</div>
+
+<script src="https://unpkg.com/imask"></script>
 <script src="script.js"></script>
 </body>
 </html>

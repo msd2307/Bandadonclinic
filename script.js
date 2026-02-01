@@ -1,51 +1,66 @@
-const popup=document.getElementById("popup");
-const form=document.getElementById("form");
-const phone=document.getElementById("phone");
-const status=document.getElementById("status");
+// MODAL
+const modal = document.getElementById("modal");
 
-function openForm(){popup.classList.remove("hidden");}
-function closeForm(){popup.classList.add("hidden");}
+function openModal(){
+  modal.style.display="flex";
+}
 
-// phone mask
-phone.addEventListener("input",()=>{
-  let x=phone.value.replace(/\D/g,"");
-  let f="+7 (";
-  if(x.length>0)f+=x.substring(0,3);
-  if(x.length>=3)f+=") ";
-  if(x.length>3)f+=x.substring(3,6);
-  if(x.length>=6)f+="-";
-  if(x.length>6)f+=x.substring(6,8);
-  if(x.length>=8)f+="-";
-  if(x.length>8)f+=x.substring(8,10);
-  phone.value=f;
-});
+function closeModal(){
+  modal.style.display="none";
+}
 
-form.addEventListener("submit",async e=>{
+// FAQ
+function toggleFAQ(el){
+  const p = el.nextElementSibling;
+  p.style.display = p.style.display==="block" ? "none" : "block";
+}
+
+// MASK
+var phoneMask = IMask(
+  document.getElementById('phone'), {
+    mask: '+{7} (000) 000-00-00'
+  }
+);
+
+// FORM SEND
+const form = document.getElementById("contactForm");
+const status = document.getElementById("status");
+
+form.addEventListener("submit", async (e)=>{
   e.preventDefault();
-  status.textContent="Отправка...";
-  const res=await fetch("/send",{
+
+  const data = {
+    name: name.value,
+    phone: phone.value,
+    email: email.value
+  };
+
+  status.innerText = "Отправка...";
+
+  const res = await fetch("/send",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      name:document.getElementById("name").value,
-      phone:phone.value,
-      email:document.getElementById("email").value
-    })
+    body:JSON.stringify(data)
   });
+
   if(res.ok){
-    status.textContent="Спасибо! Мы свяжемся с вами";
-    setTimeout(closeForm,2000);
+    status.innerText="Заявка отправлена!";
     form.reset();
-  }else{
-    status.textContent="Ошибка отправки";
+    setTimeout(closeModal,1500);
+  } else {
+    status.innerText="Ошибка отправки";
   }
 });
 
-// reviews slider
-let i=0;
-const reviews=document.querySelectorAll(".review");
-setInterval(()=>{
-  reviews.forEach(r=>r.classList.remove("active"));
-  i=(i+1)%reviews.length;
-  reviews[i].classList.add("active");
-},3000);
+// SCROLL ANIMATION
+const faders = document.querySelectorAll(".fade-in");
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{threshold:0.2});
+
+faders.forEach(el=>observer.observe(el));
