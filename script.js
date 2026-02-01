@@ -12,10 +12,30 @@ window.addEventListener('scroll', reveal);
 reveal();
 
 
-// ===== POPUP =====
+const form = document.getElementById("bookingForm");
+const statusText = document.getElementById("status");
+
+const phoneInput = document.getElementById("phone");
 const popup = document.getElementById("popup");
 const closePopup = document.getElementById("closePopup");
 
+// ===== PHONE MASK =====
+phoneInput.addEventListener("input", () => {
+  let x = phoneInput.value.replace(/\D/g, "").slice(1);
+
+  let formatted = "+7 (";
+  if (x.length > 0) formatted += x.substring(0, 3);
+  if (x.length >= 3) formatted += ") ";
+  if (x.length > 3) formatted += x.substring(3, 6);
+  if (x.length >= 6) formatted += "-";
+  if (x.length > 6) formatted += x.substring(6, 8);
+  if (x.length >= 8) formatted += "-";
+  if (x.length > 8) formatted += x.substring(8, 10);
+
+  phoneInput.value = formatted;
+});
+
+// ===== POPUP =====
 function showPopup() {
   popup.classList.remove("hidden");
 }
@@ -24,65 +44,38 @@ closePopup.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-
-// ===== МАСКА ТЕЛЕФОНА =====
-const phoneInput = document.getElementById("phone");
-
-phoneInput.addEventListener("input", maskPhone);
-
-function maskPhone(e) {
-  let x = e.target.value.replace(/\D/g, "").slice(0, 11);
-
-  if (x.startsWith("8")) x = "7" + x.slice(1);
-
-  let formatted = "+7";
-
-  if (x.length > 1) formatted += " (" + x.substring(1, 4);
-  if (x.length >= 4) formatted += ")";
-  if (x.length >= 4) formatted += " " + x.substring(4, 7);
-  if (x.length >= 7) formatted += "-" + x.substring(7, 9);
-  if (x.length >= 9) formatted += "-" + x.substring(9, 11);
-
-  e.target.value = formatted;
-}
-
-
-// ===== ФОРМА =====
-const form = document.getElementById("bookingForm");
-const statusText = document.getElementById("status");
-
+// ===== FORM SEND =====
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
+  const phone = phoneInput.value.trim();
   const email = document.getElementById("email").value.trim();
 
-  // regex под формат: +7 (999) 999-99-99
-  const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
-
-  if (!phoneRegex.test(phone)) {
-    statusText.innerText = "Введите корректный номер телефона";
-    return;
-  }
-
-  const data = { name, phone, email };
+  statusText.textContent = "Отправка...";
 
   try {
-    const response = await fetch("/book", {
+    const response = await fetch("/send", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, phone, email })
     });
 
     const result = await response.json();
 
-    statusText.innerText = "";
+    if (!response.ok) {
+      statusText.textContent = result.error || "Ошибка отправки";
+      return;
+    }
+
+    statusText.textContent = "";
     showPopup();
     form.reset();
 
-  } catch (error) {
-    console.error("Ошибка:", error);
-    statusText.innerText = "Ошибка отправки. Попробуйте позже.";
+  } catch (err) {
+    console.error(err);
+    statusText.textContent = "Ошибка соединения с сервером";
   }
 });
