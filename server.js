@@ -1,40 +1,37 @@
 const express = require("express");
-const fetch = require("node-fetch");
 const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ====== ENV ======
+// ===== ENV =====
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-// ====== MIDDLEWARE ======
+// ===== MIDDLEWARE =====
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// ====== ANTI SPAM (IP LIMIT) ======
+// ===== ANTI SPAM =====
 const requests = {};
 
 function rateLimit(req, res, next) {
   const ip = req.ip;
   const now = Date.now();
 
-  if (!requests[ip]) {
-    requests[ip] = [];
-  }
+  if (!requests[ip]) requests[ip] = [];
 
   requests[ip] = requests[ip].filter(time => now - time < 60000);
 
   if (requests[ip].length >= 3) {
-    return res.status(429).json({ error: "Слишком много запросов" });
+    return res.status(429).json({ error: "Слишком много заявок. Подождите минуту." });
   }
 
   requests[ip].push(now);
   next();
 }
 
-// ====== VALIDATION ======
+// ===== VALIDATION =====
 function validatePhone(phone) {
   return /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
 }
@@ -44,7 +41,7 @@ function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// ====== FORM ENDPOINT ======
+// ===== FORM =====
 app.post("/send", rateLimit, async (req, res) => {
   const { name, phone, email } = req.body;
 
@@ -69,9 +66,9 @@ app.post("/send", rateLimit, async (req, res) => {
 `;
 
   try {
-    const telegramURL = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+    const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
-    await fetch(telegramURL, {
+    await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -83,12 +80,12 @@ app.post("/send", rateLimit, async (req, res) => {
     res.json({ success: true });
 
   } catch (err) {
-    console.error("Ошибка Telegram:", err);
-    res.status(500).json({ error: "Ошибка сервера" });
+    console.error("Telegram error:", err);
+    res.status(500).json({ error: "Ошибка отправки" });
   }
 });
 
-// ====== START ======
+// ===== START =====
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
