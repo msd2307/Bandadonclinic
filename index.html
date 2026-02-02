@@ -10,101 +10,94 @@
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="top-header">
-  <div class="container nav">
-    <div class="logo">Bandadon Clinic</div>
-    <div class="nav-buttons">
-      <button class="nav-btn" onclick="scrollToSection('services')">Услуги</button>
-      <button class="nav-btn" onclick="scrollToSection('why')">Почему мы</button>
-      <button class="nav-btn" onclick="scrollToSection('stats')">Статистика</button>
-      <button class="nav-btn" onclick="scrollToSection('map')">Контакты</button>
-      <button class="main-btn" onclick="openModal()">Записаться</button>
-    </div>
-  </div>
+<header class="header">
+  <div class="logo">Bandadon Clinic</div>
+  <nav>
+    <a href="#services">Услуги</a>
+    <a href="#promo">Предложения</a>
+    <a href="#why">Почему мы</a>
+    <a href="#map">Контакты</a>
+  </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero fade-in">
-  <div class="container hero-content">
-    <h1>Bandadon Clinic</h1>
-    <p>Современная стоматология — забота о вашей улыбке</p>
-    <button class="main-btn" onclick="openModal()">Записаться на приём</button>
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Современная стоматология</h1>
+    <p>Забота о вашей улыбке каждый день</p>
+    <button onclick="openModal()">Записаться</button>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section class="services fade-in" id="services">
-  <div class="container">
-    <h2>Наши услуги</h2>
-    <div class="cards">
-      <div class="card"><i class="fa-solid fa-tooth"></i><h3>Лечение</h3></div>
-      <div class="card"><i class="fa-solid fa-face-smile"></i><h3>Отбеливание</h3></div>
-      <div class="card"><i class="fa-solid fa-shield-heart"></i><h3>Профилактика</h3></div>
-      <div class="card"><i class="fa-solid fa-screwdriver-wrench"></i><h3>Имплантация</h3></div>
-    </div>
+<section class="services" id="services">
+  <h2>Наши услуги</h2>
+  <div class="cards">
+    <div class="card"><i class="fa-solid fa-tooth"></i> Лечение зубов</div>
+    <div class="card"><i class="fa-solid fa-face-smile"></i> Отбеливание</div>
+    <div class="card"><i class="fa-solid fa-shield-heart"></i> Профилактика</div>
+    <div class="card"><i class="fa-solid fa-screwdriver-wrench"></i> Имплантация</div>
   </div>
 </section>
 
-<!-- WHY US -->
-<section class="why-us fade-in" id="why">
-  <div class="container">
-    <h2>Почему выбирают нас</h2>
-    <div class="why-cards">
-      <div class="why-card"><i class="fa-solid fa-user-doctor"></i><p>Опытные врачи</p></div>
-      <div class="why-card"><i class="fa-solid fa-syringe"></i><p>Без боли</p></div>
-      <div class="why-card"><i class="fa-solid fa-microscope"></i><p>Современное оборудование</p></div>
-      <div class="why-card"><i class="fa-solid fa-shield-heart"></i><p>Гарантия качества</p></div>
+<section class="promo" id="promo">
+  <h2>Специальные предложения</h2>
+
+  <div class="promo-cards">
+
+    <div class="promo-card">
+      <h3>All-on-4 от 99 000 ₽</h3>
+      <p>
+        Полное восстановление зубов за 1 день.<br>
+        Надёжная имплантация с немедленной нагрузкой.<br>
+        Комфорт, эстетика и уверенность в улыбке.
+      </p>
+      <button onclick="openModal()">Записаться</button>
     </div>
+
+    <div class="promo-card">
+      <h3>Виниры</h3>
+      <p>
+        Идеальная форма и цвет зубов.<br>
+        Тонкие керамические накладки без брекетов.<br>
+        Белоснежная улыбка за несколько визитов.
+      </p>
+      <button onclick="openModal()">Записаться</button>
+    </div>
+
   </div>
 </section>
 
-<!-- STATS -->
-<section class="stats fade-in" id="stats">
-  <div class="container">
-    <h2>Клиника в цифрах</h2>
-    <div class="stats-cards">
-      <div class="stat-card">
-        <span class="stat-number" data-target="10">0</span>
-        <p>лет опыта</p>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number" data-target="5000">0</span>
-        <p>пациентов</p>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number" data-target="100">0</span>
-        <p>% довольных</p>
-      </div>
-    </div>
+<section class="why" id="why">
+  <h2>Почему выбирают нас</h2>
+  <div class="why-cards">
+    <div class="why-card">Современное оборудование</div>
+    <div class="why-card">Опытные врачи</div>
+    <div class="why-card">Без боли и стресса</div>
+    <div class="why-card">Гарантия качества</div>
   </div>
 </section>
 
-<!-- MAP -->
-<section class="map-section fade-in" id="map">
-  <div class="container">
-    <h2>Как нас найти</h2>
-    <div class="map-card">
-      <iframe src="https://www.google.com/maps?q=Москва,красная площадь+1&output=embed" loading="lazy"></iframe>
-    </div>
-  </div>
+<section class="map" id="map">
+  <h2>Мы на карте</h2>
+  <iframe 
+    src="https://www.google.com/maps?q=Москва&output=embed"
+    width="100%" height="350" style="border:0;" allowfullscreen loading="lazy">
+  </iframe>
 </section>
 
 <footer>
   © 2026 Bandadon Clinic
 </footer>
 
-<!-- STICKY BUTTONS -->
+<!-- Sticky buttons -->
 <div class="sticky-buttons">
-  <div class="sticky-btn book-btn" onclick="openModal()">📝 Записаться</div>
-  <a href="https://t.me/yourtelegram" target="_blank" class="sticky-btn tg-btn">
-    <i class="fa-brands fa-telegram"></i>
-  </a>
+  <button onclick="openModal()">Записаться</button>
+  <a href="https://t.me/yourtelegram" target="_blank"><i class="fa-brands fa-telegram"></i></a>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-  <div class="modal-content fade-in">
+  <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
     <h2>Записаться на приём</h2>
 
@@ -112,7 +105,7 @@
       <input type="text" id="name" placeholder="Ваше имя" required>
       <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
       <input type="email" id="email" placeholder="Email (необязательно)">
-      <button type="submit" class="main-btn">Отправить</button>
+      <button type="submit">Отправить</button>
       <p id="status"></p>
     </form>
   </div>
