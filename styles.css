@@ -236,3 +236,22 @@ footer {
   .hero h1 { font-size:32px; }
   section { padding:80px 20px; }
 }
+
+
+
+.map-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.map-container iframe {
+  width: 100% !important;
+  height: 350px;
+  border: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
