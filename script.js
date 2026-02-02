@@ -2,24 +2,21 @@ const modal = document.getElementById("modal");
 const mobileMenu = document.getElementById("mobileMenu");
 
 function openModal(){
-  modal.style.display="flex";
+  modal.classList.add("active");
 }
 
 function closeModal(){
-  modal.style.display="none";
+  modal.classList.remove("active");
 }
 
-// burger menu
 function toggleMenu(){
-  mobileMenu.style.display = mobileMenu.style.display==="flex" ? "none" : "flex";
+  mobileMenu.classList.toggle("active");
 }
 
 // phone mask
 const phoneInput = document.getElementById("phone");
 if(phoneInput){
-  IMask(phoneInput,{
-    mask:"+{7} (000) 000-00-00"
-  });
+  IMask(phoneInput,{ mask:"+{7} (000) 000-00-00" });
 }
 
 // fade-in animation
@@ -30,17 +27,16 @@ const observer = new IntersectionObserver(entries=>{
       entry.target.classList.add("show");
     }
   });
-});
+},{threshold:0.2});
 elements.forEach(el=>observer.observe(el));
 
 // smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-  anchor.addEventListener("click", function(e){
+  anchor.addEventListener("click",function(e){
     e.preventDefault();
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior:"smooth"
-    });
-    mobileMenu.style.display="none";
+    document.querySelector(this.getAttribute("href"))
+      .scrollIntoView({behavior:"smooth"});
+    mobileMenu.classList.remove("active");
   });
 });
 
@@ -72,3 +68,42 @@ form.addEventListener("submit", async e=>{
   }
 });
 }
+
+window.addEventListener("click",e=>{
+  if(e.target===modal){ closeModal(); }
+});
+// Mobile menu
+function toggleMenu() {
+  document.getElementById("mobileMenu").classList.toggle("active");
+}
+
+// Modal
+function openModal() {
+  document.getElementById("modal").classList.add("active");
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("active");
+}
+
+// Scroll animation
+const elements = document.querySelectorAll(".fade-in");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+},{ threshold:0.2 });
+
+elements.forEach(el => observer.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e){
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href'))
+      .scrollIntoView({behavior:'smooth'});
+  });
+});

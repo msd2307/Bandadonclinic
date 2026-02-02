@@ -2,102 +2,66 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Услуги — Bandadon Clinic</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
-<header>
+<header class="header">
   <div class="logo">Bandadon Clinic</div>
-  <nav>
+  <nav class="nav">
     <a href="index.html">Главная</a>
     <a href="portfolio.html">Портфолио</a>
-    <a href="#contacts">Контакты</a>
   </nav>
-  <div class="burger" onclick="toggleMenu()">☰</div>
 </header>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Главная</a>
-  <a href="portfolio.html">Портфолио</a>
-  <a href="#contacts">Контакты</a>
-</div>
-
-<section class="fade-in">
-  <h2>Наши услуги</h2>
-
-  <div class="cards">
-
-    <div class="card">
-      <i class="fa-solid fa-teeth"></i>
-      <h3>All-on-4</h3>
-      <p>Полное восстановление зубов за 1 день. Современные импланты и цифровое планирование.</p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-tooth"></i>
-      <h3>Имплантация</h3>
-      <p>Надёжные системы имплантов с гарантией качества и комфортным лечением.</p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-face-smile-beam"></i>
-      <h3>Лечение зубов</h3>
-      <p>Современное лечение без боли с использованием микроскопа.</p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-wand-magic-sparkles"></i>
-      <h3>Отбеливание и гигиена</h3>
-      <p>Профессиональная чистка и отбеливание для белоснежной улыбки.</p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-crown"></i>
-      <h3>Протезирование</h3>
-      <p>Эстетичные коронки и протезы для восстановления функции и красоты.</p>
-    </div>
-
-  </div>
+<section class="page-hero fade-in">
+  <h1>Наши услуги</h1>
 </section>
 
-<section id="contacts" class="fade-in">
-  <h2>Контакты</h2>
-  <p>📍 Москва, ул. Примерная 10</p>
+<section class="fade-in">
+<div class="cards">
 
-  <div class="map-container">
-    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A9f9d8f1d6f1b2e0fbe2bb1f5e2f2c6a6c0b7e7a1c4e3b9b8b5c4a2d7e6b3a"></iframe>
-  </div>
+<div class="card">
+<i class="fa-solid fa-teeth"></i>
+<h3>All-on-4</h3>
+<p>Полная имплантация за 1 день.</p>
+<p><b>Наша особенность:</b> цифровое планирование и пожизненная гарантия.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-face-smile-beam"></i>
+<h3>Виниры</h3>
+<p>Эстетическая коррекция улыбки.</p>
+<p><b>Наша особенность:</b> ультратонкие керамические виниры.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-screwdriver-wrench"></i>
+<h3>Имплантация</h3>
+<p>Установка имплантов премиум-класса.</p>
+<p><b>Наша особенность:</b> точность и безболезненность.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-tooth"></i>
+<h3>Лечение зубов</h3>
+<p>Кариес, каналы, реставрации.</p>
+<p><b>Наша особенность:</b> лечение под микроскопом.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-user-doctor"></i>
+<h3>Протезирование</h3>
+<p>Съёмные и несъёмные протезы.</p>
+<p><b>Наша особенность:</b> индивидуальный подбор.</p>
+</div>
+
+</div>
 </section>
 
 <footer>© 2026 Bandadon Clinic</footer>
-
-<div class="sticky-buttons">
-  <button onclick="openModal()">Записаться</button>
-  <a href="https://t.me/yourtelegram" class="tg-btn">Telegram</a>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-<div class="modal-content fade-in">
-<span class="close" onclick="closeModal()">×</span>
-<h2>Записаться</h2>
-
-<form id="contactForm">
-<input type="text" id="name" placeholder="Имя" required>
-<input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
-<input type="email" id="email" placeholder="Email">
-<button type="submit">Отправить</button>
-<p id="status"></p>
-</form>
-</div>
-</div>
-
-<script src="https://unpkg.com/imask"></script>
-<script src="script.js"></script>
 </body>
 </html>

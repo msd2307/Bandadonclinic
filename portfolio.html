@@ -2,29 +2,45 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<title>Портфолио — Bandadon Clinic</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Портфолио</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
-<div class="logo">Bandadon Clinic</div>
-<nav>
-<a href="index.html">Главная</a>
-<a href="services.html">Услуги</a>
-</nav>
+<header class="header">
+  <div class="logo">Bandadon Clinic</div>
+  <nav class="nav">
+    <a href="index.html">Главная</a>
+    <a href="services.html">Услуги</a>
+  </nav>
 </header>
 
-<section class="fade-in">
-<h2>Наши работы</h2>
-<div class="cards">
-<div class="card">До / После №1</div>
-<div class="card">До / После №2</div>
-<div class="card">До / После №3</div>
-</div>
+<section class="page-hero fade-in">
+  <h1>Наши работы</h1>
 </section>
 
-<script src="script.js"></script>
+<section class="fade-in">
+  <div class="portfolio-grid">
+
+    <div class="portfolio-card">
+      <img src="work1.jpg" alt="Работа 1">
+      <p>All-on-4 — до и после</p>
+    </div>
+
+    <div class="portfolio-card">
+      <img src="work2.jpg" alt="Работа 2">
+      <p>Виниры — до и после</p>
+    </div>
+
+    <div class="portfolio-card">
+      <img src="work3.jpg" alt="Работа 3">
+      <p>Имплантация</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>© 2026 Bandadon Clinic</footer>
 </body>
 </html>
