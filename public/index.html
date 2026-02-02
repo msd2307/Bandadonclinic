@@ -11,12 +11,17 @@
 
 <header class="header">
   <div class="logo">Bandadon Clinic</div>
-  <nav>
+
+  <nav class="nav" id="navMenu">
     <a href="index.html">Главная</a>
     <a href="services.html">Услуги</a>
     <a href="#promo">Акции</a>
     <a href="#contacts">Контакты</a>
   </nav>
+
+  <div class="burger" id="burger">
+    <span></span><span></span><span></span>
+  </div>
 </header>
 
 <header class="hero fade-in">
@@ -33,21 +38,21 @@
 
 <div class="promo-cards">
 
-<div class="promo-card">
+<div class="promo-card fade-up">
 <h3>🦷 Имплантация</h3>
 <p>Надежные импланты премиум класса</p>
 <span class="price">от 10 000 ₽</span>
 <button class="main-btn" onclick="openModal()">Записаться</button>
 </div>
 
-<div class="promo-card">
+<div class="promo-card fade-up">
 <h3>✨ All-on-4</h3>
 <p>Полное восстановление улыбки за 1 день</p>
 <span class="price">от 99 000 ₽</span>
 <button class="main-btn" onclick="openModal()">Записаться</button>
 </div>
 
-<div class="promo-card">
+<div class="promo-card fade-up">
 <h3>😁 Виниры</h3>
 <p>Белоснежная улыбка без брекетов</p>
 <span class="price">от 15 000 ₽ за зуб</span>
@@ -60,23 +65,20 @@
 <section class="why fade-in">
 <h2>Почему выбирают нас</h2>
 <div class="why-cards">
-<div>🦷 Новейшее цифровое оборудование</div>
-<div>👨‍⚕️ Врачи с опытом более 10 лет</div>
-<div>💎 Гарантия на лечение и импланты</div>
-<div>😌 Лечение без боли и стресса</div>
-<div>📍 Удобное расположение</div>
-<div>💳 Рассрочка и доступные цены</div>
+<div class="fade-up">🦷 Новейшее оборудование</div>
+<div class="fade-up">👨‍⚕️ Врачи с опытом 10+ лет</div>
+<div class="fade-up">💎 Гарантия качества</div>
+<div class="fade-up">😌 Без боли</div>
+<div class="fade-up">📍 Центр города</div>
+<div class="fade-up">💳 Рассрочка</div>
 </div>
 </section>
 
 <section id="contacts" class="contacts fade-in">
 <h2>Контакты</h2>
-
-<div class="contact-box">
-<p><b>📍 Адрес:</b> г. Москва, ул. Примерная 12</p>
-<p><b>📞 Телефон:</b> +7 (999) 123-45-67</p>
-<p><b>⏰ График:</b> ежедневно 9:00–21:00</p>
-</div>
+<p>📍 Москва, ул. Примерная 12</p>
+<p>📞 +7 (999) 123-45-67</p>
+<p>⏰ 9:00 – 21:00</p>
 
 <div class="map">
 <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6a9c6b2d&source=constructor" width="100%" height="300" frameborder="0"></iframe>
@@ -85,7 +87,6 @@
 
 <footer>© 2026 Bandadon Clinic</footer>
 
-<!-- Sticky buttons -->
 <div class="sticky-buttons">
 <button onclick="openModal()" class="main-btn">Записаться</button>
 <a href="https://t.me/yourtelegram" class="main-btn">Telegram</a>
@@ -95,11 +96,10 @@
 <div class="modal" id="modal">
 <div class="modal-content">
 <span class="close" onclick="closeModal()">&times;</span>
-<h2>Записаться на приём</h2>
+<h2>Записаться</h2>
 <form id="contactForm">
 <input type="text" id="name" placeholder="Ваше имя" required>
 <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
-<input type="email" id="email" placeholder="Email (необязательно)">
 <button type="submit" class="main-btn">Отправить</button>
 <p id="status"></p>
 </form>

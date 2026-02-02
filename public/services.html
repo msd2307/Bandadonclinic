@@ -3,41 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Услуги — Bandadon Clinic</title>
+<title>Услуги</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="header">
-<div class="logo">Bandadon Clinic</div>
-<nav>
-<a href="index.html">Главная</a>
-<a href="services.html">Услуги</a>
-<a href="index.html#contacts">Контакты</a>
-</nav>
+  <div class="logo">Bandadon Clinic</div>
+
+  <nav class="nav" id="navMenu">
+    <a href="index.html">Главная</a>
+    <a href="services.html">Услуги</a>
+    <a href="index.html#contacts">Контакты</a>
+  </nav>
+
+  <div class="burger" id="burger">
+    <span></span><span></span><span></span>
+  </div>
 </header>
 
 <section class="services-page fade-in">
 <h1>Наши услуги</h1>
 
 <ul class="service-list">
-<li>🦷 Имплантация зубов</li>
-<li>😁 Отбеливание зубов</li>
-<li>🪥 Профессиональная гигиена</li>
-<li>👑 Протезирование</li>
-<li>😷 Лечение кариеса</li>
-<li>🦠 Лечение каналов</li>
-<li>🧒 Детская стоматология</li>
-<li>🦷 Ортодонтия (брекеты, элайнеры)</li>
-<li>🩺 Хирургия</li>
-<li>✨ Виниры</li>
-<li>😴 Лечение под седацией</li>
+<li class="fade-up">🦷 Имплантация</li>
+<li class="fade-up">😁 Отбеливание</li>
+<li class="fade-up">🪥 Гигиена</li>
+<li class="fade-up">👑 Протезирование</li>
+<li class="fade-up">😷 Лечение кариеса</li>
+<li class="fade-up">🦠 Каналы</li>
+<li class="fade-up">🧒 Детская стоматология</li>
+<li class="fade-up">🦷 Брекеты и элайнеры</li>
+<li class="fade-up">✨ Виниры</li>
 </ul>
 
 <button class="main-btn" onclick="openModal()">Записаться</button>
 </section>
 
-<!-- Sticky buttons -->
 <div class="sticky-buttons">
 <button onclick="openModal()" class="main-btn">Записаться</button>
 <a href="https://t.me/yourtelegram" class="main-btn">Telegram</a>
@@ -47,11 +49,10 @@
 <div class="modal" id="modal">
 <div class="modal-content">
 <span class="close" onclick="closeModal()">&times;</span>
-<h2>Записаться на приём</h2>
+<h2>Записаться</h2>
 <form id="contactForm">
 <input type="text" id="name" placeholder="Ваше имя" required>
 <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
-<input type="email" id="email" placeholder="Email (необязательно)">
 <button type="submit" class="main-btn">Отправить</button>
 <p id="status"></p>
 </form>
