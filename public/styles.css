@@ -236,3 +236,50 @@ h1{font-size:28px;}
 .header nav{display:none;}
 .sticky-buttons{right:10px;bottom:10px;}
 }
+
+.contacts {
+padding:60px 20px;
+text-align:center;
+background:#f3f9ff;
+}
+
+.contact-box p {
+margin:10px 0;
+font-size:18px;
+}
+
+.map {
+margin-top:20px;
+border-radius:15px;
+overflow:hidden;
+}
+
+.services-page {
+padding:100px 20px;
+text-align:center;
+}
+
+.service-list {
+list-style:none;
+padding:0;
+margin:30px 0;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.service-list li {
+background:white;
+padding:15px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+/* Mobile optimization */
+@media(max-width:768px){
+.header nav{display:none;}
+h1{font-size:26px;}
+h2{font-size:22px;}
+.promo-cards,.why-cards,.service-list{grid-template-columns:1fr;}
+.map iframe{height:250px;}
+}
