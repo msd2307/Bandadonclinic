@@ -6,29 +6,13 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- TELEGRAM BUTTON -->
-<a href="https://t.me/ТВОЙ_ЮЗЕРНЕЙМ" class="tg-btn" target="_blank">
-  <i class="fa-brands fa-telegram"></i>
-</a>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="logo">Bandadon Clinic</div>
-  <ul>
-    <li><a href="#services">Услуги</a></li>
-    <li><a href="#promo">Акции</a></li>
-    <li><a href="#reviews">Отзывы</a></li>
-    <li><a href="#map">Контакты</a></li>
-    <li><button onclick="openModal()">Записаться</button></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
 <header class="hero fade-in">
+  <div class="overlay"></div>
   <div class="content">
     <h1>Bandadon Clinic</h1>
     <p>Современная стоматология — забота о вашей улыбке</p>
@@ -36,8 +20,7 @@
   </div>
 </header>
 
-<!-- SERVICES -->
-<section id="services" class="fade-in">
+<section class="services fade-in">
   <h2>Наши услуги</h2>
   <div class="cards">
     <div class="card"><i class="fa-solid fa-tooth"></i> Лечение зубов</div>
@@ -47,41 +30,34 @@
   </div>
 </section>
 
-<!-- PROMO -->
-<section id="promo" class="promo fade-in">
+<section class="promo fade-in">
   <h2>Специальные предложения</h2>
 
   <div class="promo-cards">
+
     <div class="promo-card">
+      <i class="fa-solid fa-teeth"></i>
       <h3>All-on-4</h3>
-      <p>Полное восстановление улыбки за 1 день</p>
-      <span>от 99 000 ₽</span>
+      <p>
+        Полное восстановление улыбки всего за 1 день.<br>
+        Надёжная имплантация по технологии All-on-4.
+      </p>
+      <span class="price">от 99 000 ₽</span>
       <button onclick="openModal()">Записаться</button>
     </div>
 
     <div class="promo-card">
+      <i class="fa-solid fa-face-smile-beam"></i>
       <h3>Виниры</h3>
-      <p>Белоснежная улыбка без брекетов</p>
-      <span>от 15 000 ₽</span>
+      <p>
+        Идеальная белоснежная улыбка без брекетов.<br>
+        Тонкие керамические накладки на зубы.
+      </p>
+      <span class="price">от 15 000 ₽ за зуб</span>
       <button onclick="openModal()">Записаться</button>
     </div>
-  </div>
-</section>
 
-<!-- REVIEWS -->
-<section id="reviews" class="fade-in">
-  <h2>Отзывы пациентов</h2>
-  <div class="review-cards">
-    <div class="review">⭐⭐⭐⭐⭐<br>Очень доволен лечением!</div>
-    <div class="review">⭐⭐⭐⭐⭐<br>Быстро и без боли.</div>
-    <div class="review">⭐⭐⭐⭐⭐<br>Советую всем!</div>
   </div>
-</section>
-
-<!-- MAP -->
-<section id="map" class="fade-in">
-  <h2>Мы на карте</h2>
-  <iframe src="https://maps.google.com/maps?q=Moscow&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
 </section>
 
 <footer>
@@ -90,9 +66,9 @@
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">×</span>
-    <h2>Записаться</h2>
+  <div class="modal-content fade-in">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Записаться на приём</h2>
 
     <form id="contactForm">
       <input type="text" id="name" placeholder="Ваше имя" required>
