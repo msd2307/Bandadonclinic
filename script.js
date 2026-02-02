@@ -51,3 +51,7 @@ form.addEventListener("submit", async e=>{
     status.textContent = "Ошибка отправки";
   }
 });
+function scrollToSection(id) {
+  const section = document.getElementById(id);
+  section.scrollIntoView({ behavior: "smooth" });
+}

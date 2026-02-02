@@ -6,7 +6,7 @@
 }
 
 body {
-  background: linear-gradient(180deg, #f3f3f3, #fff7ee);
+  background: linear-gradient(180deg, #f2f4f7, #fffaf3, #eef6ff);
   color: #222;
   line-height: 1.6;
 }
@@ -20,10 +20,11 @@ body {
 
 /* HEADER */
 .top-header {
-  background: white;
+  background: rgba(255,255,255,0.95);
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(6px);
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
@@ -43,6 +44,7 @@ body {
 .nav-buttons {
   display: flex;
   gap: 15px;
+  align-items: center;
 }
 
 .nav-btn {
@@ -50,10 +52,33 @@ body {
   color: #333;
   box-shadow: none;
   padding: 10px 18px;
+  border-radius: 20px;
+  transition: 0.3s;
 }
 
 .nav-btn:hover {
-  background: #f1f5ff;
+  background: #eef4ff;
+  transform: translateY(-2px);
+}
+
+/* TELEGRAM */
+.telegram-btn {
+  width: 42px;
+  height: 42px;
+  background: #229ED9;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: 0.3s;
+  box-shadow: 0 5px 15px rgba(34,158,217,0.4);
+}
+
+.telegram-btn:hover {
+  transform: scale(1.1);
+  background: #1b8fc8;
 }
 
 /* HERO */
@@ -65,7 +90,7 @@ body {
 }
 
 .hero-content {
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.85);
   padding: 40px;
   border-radius: 25px;
   max-width: 500px;
@@ -103,10 +128,6 @@ button:hover {
   text-align: center;
 }
 
-.services h2 {
-  font-size: 36px;
-}
-
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
@@ -116,7 +137,6 @@ button:hover {
 
 .card {
   background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(6px);
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.08);
@@ -124,7 +144,7 @@ button:hover {
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
 
 .card i {
@@ -156,12 +176,6 @@ button:hover {
 
 .promo-card:hover {
   transform: translateY(-6px);
-}
-
-.promo-card i {
-  font-size: 42px;
-  color: #0072ff;
-  margin-bottom: 15px;
 }
 
 .price {
@@ -215,14 +229,6 @@ footer {
   border-radius: 20px;
   width: 90%;
   max-width: 400px;
-  text-align: center;
-  animation: popup 0.4s ease;
-}
-
-.close {
-  float: right;
-  font-size: 22px;
-  cursor: pointer;
 }
 
 /* FORM */
@@ -249,17 +255,6 @@ input {
 .fade-in.show {
   opacity: 1;
   transform: translateY(0);
-}
-
-@keyframes popup {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 /* MOBILE */

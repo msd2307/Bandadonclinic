@@ -10,13 +10,19 @@
 </head>
 <body>
 
-<!-- TOP HEADER -->
+<!-- HEADER -->
 <header class="top-header">
   <div class="container nav">
     <div class="logo">Bandadon Clinic</div>
+
     <div class="nav-buttons">
-      <button class="nav-btn">Услуги</button>
-      <button class="nav-btn">Контакты</button>
+      <button class="nav-btn" onclick="scrollToSection('services')">Услуги</button>
+      <button class="nav-btn" onclick="scrollToSection('map')">Контакты</button>
+
+      <a href="https://t.me/your_telegram" target="_blank" class="telegram-btn">
+        <i class="fa-brands fa-telegram"></i>
+      </a>
+
       <button onclick="openModal()">Записаться</button>
     </div>
   </div>
@@ -32,7 +38,7 @@
 </section>
 
 <!-- SERVICES -->
-<section class="services fade-in">
+<section class="services fade-in" id="services">
   <div class="container">
     <h2>Наши услуги</h2>
 
@@ -70,14 +76,10 @@
     <h2>Специальные предложения</h2>
 
     <div class="promo-cards">
-
       <div class="promo-card">
         <i class="fa-solid fa-teeth"></i>
         <h3>All-on-4</h3>
-        <p>
-          Полное восстановление улыбки всего за 1 день.<br>
-          Надёжная имплантация по технологии All-on-4.
-        </p>
+        <p>Полное восстановление улыбки за 1 день</p>
         <span class="price">от 99 000 ₽</span>
         <button onclick="openModal()">Записаться</button>
       </div>
@@ -85,25 +87,21 @@
       <div class="promo-card">
         <i class="fa-solid fa-face-smile-beam"></i>
         <h3>Виниры</h3>
-        <p>
-          Белоснежная улыбка без брекетов.<br>
-          Тонкие керамические накладки.
-        </p>
-        <span class="price">от 15 000 ₽ за зуб</span>
+        <p>Белоснежная улыбка без брекетов</p>
+        <span class="price">от 15 000 ₽</span>
         <button onclick="openModal()">Записаться</button>
       </div>
-
     </div>
   </div>
 </section>
 
 <!-- MAP -->
-<section class="map-section fade-in">
+<section class="map-section fade-in" id="map">
   <div class="container">
     <h2>Как нас найти</h2>
     <div class="map-card">
       <iframe 
-        src="https://www.google.com/maps?q=Moscow&output=embed"
+        src="https://www.google.com/maps?q=Москва, Тверская улица 1&output=embed"
         loading="lazy">
       </iframe>
     </div>
