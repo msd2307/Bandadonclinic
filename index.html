@@ -33,10 +33,10 @@
   <div class="container">
     <h2>Наши услуги</h2>
     <div class="cards">
-      <div class="card"><i class="fa-solid fa-tooth"></i><h3>Лечение</h3><p>Без боли</p></div>
-      <div class="card"><i class="fa-solid fa-face-smile"></i><h3>Отбеливание</h3><p>Эстетика</p></div>
-      <div class="card"><i class="fa-solid fa-shield-heart"></i><h3>Профилактика</h3><p>Здоровье</p></div>
-      <div class="card"><i class="fa-solid fa-screwdriver-wrench"></i><h3>Имплантация</h3><p>Надёжно</p></div>
+      <div class="card"><i class="fa-solid fa-tooth"></i><h3>Лечение</h3><p>Без боли и стресса</p></div>
+      <div class="card"><i class="fa-solid fa-face-smile"></i><h3>Отбеливание</h3><p>Эстетика улыбки</p></div>
+      <div class="card"><i class="fa-solid fa-shield-heart"></i><h3>Профилактика</h3><p>Здоровье зубов</p></div>
+      <div class="card"><i class="fa-solid fa-screwdriver-wrench"></i><h3>Имплантация</h3><p>Надёжно и качественно</p></div>
     </div>
   </div>
 </section>
@@ -45,10 +45,10 @@
   <div class="container">
     <h2>Почему выбирают нас</h2>
     <div class="why-cards">
-      <div class="why-card"><i class="fa-solid fa-user-doctor"></i><h3>Опытные врачи</h3><p>Профессионалы</p></div>
+      <div class="why-card"><i class="fa-solid fa-user-doctor"></i><h3>Опытные врачи</h3><p>Профессионалы с большим стажем</p></div>
       <div class="why-card"><i class="fa-solid fa-syringe"></i><h3>Без боли</h3><p>Современная анестезия</p></div>
       <div class="why-card"><i class="fa-solid fa-microscope"></i><h3>Оборудование</h3><p>Точные технологии</p></div>
-      <div class="why-card"><i class="fa-solid fa-shield-heart"></i><h3>Гарантия</h3><p>Качество</p></div>
+      <div class="why-card"><i class="fa-solid fa-shield-heart"></i><h3>Гарантия</h3><p>Качество лечения</p></div>
     </div>
   </div>
 </section>
@@ -73,8 +73,11 @@
   </div>
 </section>
 
-<footer>© 2026 Bandadon Clinic</footer>
+<footer>
+  © 2026 Bandadon Clinic
+</footer>
 
+<!-- Sticky buttons -->
 <div class="sticky-buttons">
   <div class="sticky-btn book-btn" onclick="openModal()">📝 Записаться</div>
   <a href="https://t.me/yourtelegram" target="_blank" class="sticky-btn tg-btn">
@@ -82,13 +85,16 @@
   </a>
 </div>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
-  <div class="modal-content">
+  <div class="modal-content fade-in">
     <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Записаться</h2>
+    <h2>Записаться на приём</h2>
+
     <form id="contactForm">
-      <input type="text" id="name" placeholder="Имя" required>
+      <input type="text" id="name" placeholder="Ваше имя" required>
       <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+      <input type="email" id="email" placeholder="Email (необязательно)">
       <button class="main-btn" type="submit">Отправить</button>
       <p id="status"></p>
     </form>

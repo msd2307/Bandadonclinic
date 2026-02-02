@@ -12,7 +12,7 @@ function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: "smooth" });
 }
 
-// mask
+// phone mask
 const phoneInput = document.getElementById("phone");
 IMask(phoneInput, { mask: "+{7} (000) 000-00-00" });
 
@@ -27,18 +27,7 @@ const observer = new IntersectionObserver(entries=>{
 });
 elements.forEach(el=>observer.observe(el));
 
-// why cards animation
-const whyCards = document.querySelectorAll(".why-card");
-const whyObserver = new IntersectionObserver(entries=>{
-  entries.forEach((entry,i)=>{
-    if(entry.isIntersecting){
-      setTimeout(()=>entry.target.classList.add("show"), i*150);
-    }
-  });
-});
-whyCards.forEach(card=>whyObserver.observe(card));
-
-// stats
+// stats animation
 const statNumbers = document.querySelectorAll(".stat-number");
 const statsObserver = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
@@ -46,7 +35,8 @@ const statsObserver = new IntersectionObserver(entries=>{
       const el = entry.target;
       const target = +el.dataset.target;
       let current = 0;
-      const step = target/100;
+      const step = target / 100;
+
       const timer = setInterval(()=>{
         current += step;
         if(current >= target){
@@ -56,9 +46,40 @@ const statsObserver = new IntersectionObserver(entries=>{
           el.textContent = Math.floor(current);
         }
       },20);
+
       statsObserver.unobserve(el);
     }
   });
 });
 statNumbers.forEach(num=>statsObserver.observe(num));
 
+// form submit
+const form = document.getElementById("contactForm");
+const status = document.getElementById("status");
+
+form.addEventListener("submit", async e=>{
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = phoneInput.value;
+  const email = document.getElementById("email").value;
+
+  status.textContent = "Отправка...";
+
+  try {
+    const res = await fetch("/send",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ name, phone, email })
+    });
+
+    if(res.ok){
+      status.textContent = "Заявка отправлена!";
+      form.reset();
+    } else {
+      status.textContent = "Ошибка отправки";
+    }
+  } catch {
+    status.textContent = "Ошибка соединения";
+  }
+});
