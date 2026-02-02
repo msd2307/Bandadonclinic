@@ -14,9 +14,11 @@ function scrollToSection(id) {
 
 // phone mask
 const phoneInput = document.getElementById("phone");
-IMask(phoneInput, { mask: "+{7} (000) 000-00-00" });
+IMask(phoneInput, {
+  mask: "+{7} (000) 000-00-00"
+});
 
-// fade in
+// fade animation
 const elements = document.querySelectorAll(".fade-in");
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
@@ -29,6 +31,7 @@ elements.forEach(el=>observer.observe(el));
 
 // stats animation
 const statNumbers = document.querySelectorAll(".stat-number");
+
 const statsObserver = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -51,6 +54,7 @@ const statsObserver = new IntersectionObserver(entries=>{
     }
   });
 });
+
 statNumbers.forEach(num=>statsObserver.observe(num));
 
 // form submit
@@ -66,20 +70,16 @@ form.addEventListener("submit", async e=>{
 
   status.textContent = "Отправка...";
 
-  try {
-    const res = await fetch("/send",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ name, phone, email })
-    });
+  const res = await fetch("/send",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ name, phone, email })
+  });
 
-    if(res.ok){
-      status.textContent = "Заявка отправлена!";
-      form.reset();
-    } else {
-      status.textContent = "Ошибка отправки";
-    }
-  } catch {
-    status.textContent = "Ошибка соединения";
+  if(res.ok){
+    status.textContent = "Заявка отправлена!";
+    form.reset();
+  } else {
+    status.textContent = "Ошибка отправки";
   }
 });
