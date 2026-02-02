@@ -24,7 +24,7 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1>Современная стоматология</h1>
-    <p>Забота о вашей улыбке каждый день</p>
+    <p>Забота о вашей улыбке</p>
     <button onclick="openModal()">Записаться</button>
   </div>
 </section>
@@ -32,10 +32,22 @@
 <section class="services" id="services">
   <h2>Наши услуги</h2>
   <div class="cards">
-    <div class="card"><i class="fa-solid fa-tooth"></i> Лечение зубов</div>
-    <div class="card"><i class="fa-solid fa-face-smile"></i> Отбеливание</div>
-    <div class="card"><i class="fa-solid fa-shield-heart"></i> Профилактика</div>
-    <div class="card"><i class="fa-solid fa-screwdriver-wrench"></i> Имплантация</div>
+    <div class="card">
+      <i class="fa-solid fa-tooth"></i>
+      <h3>Лечение зубов</h3>
+    </div>
+    <div class="card">
+      <i class="fa-solid fa-face-smile"></i>
+      <h3>Отбеливание</h3>
+    </div>
+    <div class="card">
+      <i class="fa-solid fa-shield-heart"></i>
+      <h3>Профилактика</h3>
+    </div>
+    <div class="card">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+      <h3>Имплантация</h3>
+    </div>
   </div>
 </section>
 
@@ -45,21 +57,21 @@
   <div class="promo-cards">
 
     <div class="promo-card">
+      <i class="fa-solid fa-teeth"></i>
       <h3>All-on-4 от 99 000 ₽</h3>
       <p>
         Полное восстановление зубов за 1 день.<br>
-        Надёжная имплантация с немедленной нагрузкой.<br>
-        Комфорт, эстетика и уверенность в улыбке.
+        Надёжная имплантация и естественная улыбка.
       </p>
       <button onclick="openModal()">Записаться</button>
     </div>
 
     <div class="promo-card">
+      <i class="fa-solid fa-face-smile-beam"></i>
       <h3>Виниры</h3>
       <p>
         Идеальная форма и цвет зубов.<br>
-        Тонкие керамические накладки без брекетов.<br>
-        Белоснежная улыбка за несколько визитов.
+        Белоснежная улыбка без брекетов.
       </p>
       <button onclick="openModal()">Записаться</button>
     </div>
@@ -81,7 +93,7 @@
   <h2>Мы на карте</h2>
   <iframe 
     src="https://www.google.com/maps?q=Москва&output=embed"
-    width="100%" height="350" style="border:0;" allowfullscreen loading="lazy">
+    width="100%" height="350" style="border:0;" loading="lazy">
   </iframe>
 </section>
 
@@ -91,8 +103,10 @@
 
 <!-- Sticky buttons -->
 <div class="sticky-buttons">
-  <button onclick="openModal()">Записаться</button>
-  <a href="https://t.me/yourtelegram" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+  <button onclick="openModal()">Запись</button>
+  <a href="https://t.me/yourtelegram" target="_blank" class="tg-btn">
+    <i class="fa-brands fa-telegram"></i>
+  </a>
 </div>
 
 <!-- MODAL -->
