@@ -1,81 +1,285 @@
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
-body{background:#fdfefe;color:#333;overflow-x:hidden;}
-
-.header{
-position:fixed;top:0;left:0;width:100%;
-background:white;display:flex;
-justify-content:space-between;align-items:center;
-padding:12px 20px;box-shadow:0 2px 10px rgba(0,0,0,.1);z-index:1000;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
 }
 
-.logo{font-weight:700;font-size:18px;}
-
-.nav{display:flex;gap:20px;}
-.nav a{text-decoration:none;color:#333;}
-
-.hero{height:60vh;margin-top:60px;display:flex;align-items:center;justify-content:center;position:relative;}
-.overlay{position:absolute;inset:0;background:rgba(0,0,0,.4);}
-.content{position:relative;color:white;text-align:center;padding:0 15px;}
-
-.main-btn{
-display:flex;align-items:center;justify-content:center;
-padding:12px 24px;border:none;border-radius:30px;
-background:linear-gradient(135deg,#00c6ff,#0072ff);
-color:white;font-size:16px;
-cursor:pointer;transition:.3s;text-decoration:none;
-height:46px;min-width:160px;
+body {
+  background: #fdfefe;
+  color: #333;
+  overflow-x: hidden;
 }
 
-.main-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(0,198,255,.4);}
+/* ================= HEADER ================= */
 
-section{padding:60px 15px;text-align:center;}
-
-.promo-cards,.why-cards,.service-list{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
 }
 
-.promo-card,.why-cards div,li{
-background:white;padding:20px;border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-list-style:none;
+.logo {
+  font-weight: 700;
+  font-size: 18px;
 }
 
-.price{display:block;font-size:20px;font-weight:bold;color:#00aaff;margin:10px 0;}
-
-footer{padding:20px;text-align:center;background:#111;color:white;}
-
-.modal{
-position:fixed;inset:0;background:rgba(0,0,0,.6);
-display:none;justify-content:center;align-items:center;z-index:2000;
+.nav {
+  display: flex;
+  gap: 20px;
 }
 
-.modal-content{
-background:white;padding:25px;border-radius:15px;
-width:90%;max-width:400px;
-}
-
-.modal-content form{display:flex;flex-direction:column;gap:12px;}
-
-input{padding:12px;border-radius:8px;border:1px solid #ccc;}
-
-.sticky-buttons{
-position:fixed;right:15px;bottom:15px;
-display:flex;flex-direction:column;gap:10px;z-index:1500;
+.nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
 }
 
 /* Burger */
-.burger{display:none;flex-direction:column;cursor:pointer;}
-.burger span{width:25px;height:3px;background:#333;margin:4px 0;}
-
-@media(max-width:768px){
-.nav{display:none;position:absolute;top:60px;left:0;width:100%;background:white;flex-direction:column;}
-.nav.active{display:flex;}
-.nav a{padding:15px;border-bottom:1px solid #eee;text-align:center;}
-.burger{display:flex;}
-.hero{height:50vh;}
-.main-btn{width:100%;}
+.burger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
 }
 
-/* Animations */
-.fade-in,.fade-up{opacity:0;transform:translateY(20px);transition:.8s;}
-.show{opacity:1;transform:translateY(0);}
+.burger span {
+  width: 25px;
+  height: 3px;
+  background: #333;
+  margin: 4px 0;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  height: 60vh;
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+}
+
+.content {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  padding: 0 15px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* ================= BUTTONS ================= */
+
+.main-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  min-width: 160px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.main-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0,198,255,.4);
+}
+
+/* ================= SECTIONS ================= */
+
+section {
+  padding: 60px 15px;
+  text-align: center;
+}
+
+/* Promo */
+
+.promo-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 20px;
+}
+
+.promo-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00aaff;
+}
+
+/* Why */
+
+.why-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 15px;
+}
+
+.why-cards div {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Services list */
+
+.service-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 15px;
+}
+
+.service-list li {
+  list-style: none;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  padding: 20px;
+  text-align: center;
+  background: #111;
+  color: white;
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* ================= STICKY BUTTONS ================= */
+
+.sticky-buttons {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1500;
+}
+
+/* ================= ANIMATIONS ================= */
+
+.fade-in,
+.fade-up {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: 0.8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav a {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .hero {
+    height: 50vh;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .main-btn {
+    width: 100%;
+  }
+}
