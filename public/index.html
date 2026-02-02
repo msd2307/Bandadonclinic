@@ -2,10 +2,11 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bandadon Clinic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="https://unpkg.com/imask"></script>
 </head>
 <body>
 
@@ -13,9 +14,9 @@
   <div class="logo">Bandadon Clinic</div>
 
   <nav class="nav" id="navMenu">
-    <a href="index.html">Главная</a>
-    <a href="services.html">Услуги</a>
     <a href="#promo">Акции</a>
+    <a href="services.html">Услуги</a>
+    <a href="#why">Почему мы</a>
     <a href="#contacts">Контакты</a>
   </nav>
 
@@ -24,68 +25,70 @@
   </div>
 </header>
 
-<header class="hero fade-in">
+<header class="hero fade-in" style="background:url('bg.jpg') center/cover no-repeat;">
   <div class="overlay"></div>
   <div class="content">
     <h1>Современная стоматология</h1>
-    <p>Здоровая улыбка — уверенность каждый день</p>
+    <p>Забота о вашей улыбке каждый день</p>
     <button class="main-btn" onclick="openModal()">Записаться</button>
   </div>
 </header>
 
-<section id="promo" class="promo fade-in">
-<h2>🔥 Специальные предложения</h2>
+<section id="promo" class="fade-up">
+<h2>Специальные предложения</h2>
 
 <div class="promo-cards">
 
-<div class="promo-card fade-up">
+<div class="promo-card">
 <h3>🦷 Имплантация</h3>
-<p>Надежные импланты премиум класса</p>
+<p>Надёжные импланты</p>
 <span class="price">от 10 000 ₽</span>
 <button class="main-btn" onclick="openModal()">Записаться</button>
 </div>
 
-<div class="promo-card fade-up">
+<div class="promo-card">
 <h3>✨ All-on-4</h3>
-<p>Полное восстановление улыбки за 1 день</p>
+<p>Восстановление улыбки за 1 день</p>
 <span class="price">от 99 000 ₽</span>
 <button class="main-btn" onclick="openModal()">Записаться</button>
 </div>
 
-<div class="promo-card fade-up">
+<div class="promo-card">
 <h3>😁 Виниры</h3>
-<p>Белоснежная улыбка без брекетов</p>
-<span class="price">от 15 000 ₽ за зуб</span>
+<p>Белоснежная улыбка</p>
+<span class="price">от 15 000 ₽</span>
 <button class="main-btn" onclick="openModal()">Записаться</button>
 </div>
 
 </div>
 </section>
 
-<section class="why fade-in">
+<section id="why" class="fade-up">
 <h2>Почему выбирают нас</h2>
 <div class="why-cards">
-<div class="fade-up">🦷 Новейшее оборудование</div>
-<div class="fade-up">👨‍⚕️ Врачи с опытом 10+ лет</div>
-<div class="fade-up">💎 Гарантия качества</div>
-<div class="fade-up">😌 Без боли</div>
-<div class="fade-up">📍 Центр города</div>
-<div class="fade-up">💳 Рассрочка</div>
+<div>🦷 Современное оборудование</div>
+<div>👨‍⚕️ Врачи с опытом 10+ лет</div>
+<div>😌 Без боли и стресса</div>
+<div>📍 Удобное расположение</div>
+<div>💳 Рассрочка и акции</div>
+<div>⭐ Гарантия качества</div>
 </div>
 </section>
 
-<section id="contacts" class="contacts fade-in">
+<section id="contacts" class="fade-up">
 <h2>Контакты</h2>
-<p>📍 Москва, ул. Примерная 12</p>
-<p>📞 +7 (999) 123-45-67</p>
-<p>⏰ 9:00 – 21:00</p>
+<p>г. Москва, ул. Примерная, 10</p>
+<p>Тел: +7 (999) 123-45-67</p>
 
 <div class="map">
-<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6a9c6b2d&source=constructor" width="100%" height="300" frameborder="0"></iframe>
+<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A5d3c2e9cce6b4d5e9f0d9d2fdb5b8b1b9a1a2c3d4e5f6&source=constructor"
+width="100%" height="300" frameborder="0"></iframe>
 </div>
 </section>
 
-<footer>© 2026 Bandadon Clinic</footer>
+<footer>
+© 2026 Bandadon Clinic
+</footer>
 
 <div class="sticky-buttons">
 <button onclick="openModal()" class="main-btn">Записаться</button>
@@ -95,18 +98,19 @@
 <!-- MODAL -->
 <div class="modal" id="modal">
 <div class="modal-content">
-<span class="close" onclick="closeModal()">&times;</span>
-<h2>Записаться</h2>
+<span class="close" onclick="closeModal()">×</span>
+<h2>Записаться на приём</h2>
+
 <form id="contactForm">
 <input type="text" id="name" placeholder="Ваше имя" required>
 <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+<input type="email" id="email" placeholder="Email (необязательно)">
 <button type="submit" class="main-btn">Отправить</button>
 <p id="status"></p>
 </form>
 </div>
 </div>
 
-<script src="https://unpkg.com/imask"></script>
 <script src="script.js"></script>
 </body>
 </html>

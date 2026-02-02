@@ -2,65 +2,38 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Услуги</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="header">
-  <div class="logo">Bandadon Clinic</div>
-
-  <nav class="nav" id="navMenu">
-    <a href="index.html">Главная</a>
-    <a href="services.html">Услуги</a>
-    <a href="index.html#contacts">Контакты</a>
-  </nav>
-
-  <div class="burger" id="burger">
-    <span></span><span></span><span></span>
-  </div>
+<div class="logo">Bandadon Clinic</div>
+<nav class="nav active">
+<a href="index.html">Главная</a>
+</nav>
 </header>
 
-<section class="services-page fade-in">
-<h1>Наши услуги</h1>
+<section class="fade-up">
+<h2>Наши услуги</h2>
 
 <ul class="service-list">
-<li class="fade-up">🦷 Имплантация</li>
-<li class="fade-up">😁 Отбеливание</li>
-<li class="fade-up">🪥 Гигиена</li>
-<li class="fade-up">👑 Протезирование</li>
-<li class="fade-up">😷 Лечение кариеса</li>
-<li class="fade-up">🦠 Каналы</li>
-<li class="fade-up">🧒 Детская стоматология</li>
-<li class="fade-up">🦷 Брекеты и элайнеры</li>
-<li class="fade-up">✨ Виниры</li>
+<li>Имплантация</li>
+<li>All-on-4</li>
+<li>Лечение кариеса</li>
+<li>Протезирование</li>
+<li>Виниры</li>
+<li>Отбеливание</li>
+<li>Гигиена</li>
+<li>Ортодонтия</li>
+<li>Хирургия</li>
+<li>Детская стоматология</li>
 </ul>
-
-<button class="main-btn" onclick="openModal()">Записаться</button>
 </section>
 
-<div class="sticky-buttons">
-  <button onclick="openModal()" class="main-btn">Записаться</button>
-  <a href="https://t.me/yourtelegram" class="main-btn telegram-btn">Telegram</a>
-</div>
+<footer>© 2026 Bandadon Clinic</footer>
 
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal()">&times;</span>
-<h2>Записаться</h2>
-<form id="contactForm">
-<input type="text" id="name" placeholder="Ваше имя" required>
-<input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
-<button type="submit" class="main-btn">Отправить</button>
-<p id="status"></p>
-</form>
-</div>
-</div>
-
-<script src="https://unpkg.com/imask"></script>
 <script src="script.js"></script>
 </body>
 </html>
