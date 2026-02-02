@@ -1,26 +1,28 @@
 const modal = document.getElementById("modal");
+const mobileMenu = document.getElementById("mobileMenu");
 
-function openModal() {
-  modal.style.display = "flex";
+function openModal(){
+  modal.style.display="flex";
 }
 
-function closeModal() {
-  modal.style.display = "none";
+function closeModal(){
+  modal.style.display="none";
 }
 
-// mobile menu
+// burger menu
 function toggleMenu(){
-  const menu = document.getElementById("mobileMenu");
-  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  mobileMenu.style.display = mobileMenu.style.display==="flex" ? "none" : "flex";
 }
 
 // phone mask
 const phoneInput = document.getElementById("phone");
-IMask(phoneInput, {
-  mask: "+{7} (000) 000-00-00"
-});
+if(phoneInput){
+  IMask(phoneInput,{
+    mask:"+{7} (000) 000-00-00"
+  });
+}
 
-// animation
+// fade-in animation
 const elements = document.querySelectorAll(".fade-in");
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
@@ -31,10 +33,22 @@ const observer = new IntersectionObserver(entries=>{
 });
 elements.forEach(el=>observer.observe(el));
 
+// smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+  anchor.addEventListener("click", function(e){
+    e.preventDefault();
+    document.querySelector(this.getAttribute("href")).scrollIntoView({
+      behavior:"smooth"
+    });
+    mobileMenu.style.display="none";
+  });
+});
+
 // form submit
 const form = document.getElementById("contactForm");
 const status = document.getElementById("status");
 
+if(form){
 form.addEventListener("submit", async e=>{
   e.preventDefault();
 
@@ -42,18 +56,19 @@ form.addEventListener("submit", async e=>{
   const phone = phoneInput.value;
   const email = document.getElementById("email").value;
 
-  status.textContent = "Отправка...";
+  status.textContent="Отправка...";
 
   const res = await fetch("/send",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ name, phone, email })
+    body:JSON.stringify({name,phone,email})
   });
 
   if(res.ok){
-    status.textContent = "Заявка отправлена!";
+    status.textContent="Заявка отправлена!";
     form.reset();
   } else {
-    status.textContent = "Ошибка отправки";
+    status.textContent="Ошибка отправки";
   }
 });
+}

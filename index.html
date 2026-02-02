@@ -1,161 +1,182 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Bandadon Clinic</title>
+  <meta charset="UTF-8">
+  <title>Bandadon Clinic</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="header">
   <div class="logo">Bandadon Clinic</div>
 
   <nav class="nav">
     <a href="#services">Услуги</a>
-    <a href="#promo">Акции</a>
     <a href="#why">Почему мы</a>
-    <a href="#map">Контакты</a>
+    <a href="#contacts">Контакты</a>
+    <a href="services.html">Страница услуг</a>
+    <a href="portfolio.html">Портфолио</a>
   </nav>
 
   <div class="burger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#services" onclick="toggleMenu()">Услуги</a>
-  <a href="#promo" onclick="toggleMenu()">Акции</a>
-  <a href="#why" onclick="toggleMenu()">Почему мы</a>
-  <a href="#map" onclick="toggleMenu()">Контакты</a>
+  <a href="#services">Услуги</a>
+  <a href="#why">Почему мы</a>
+  <a href="#contacts">Контакты</a>
+  <a href="services.html">Страница услуг</a>
+  <a href="portfolio.html">Портфолио</a>
 </div>
 
-<header class="hero fade-in">
-  <div class="overlay"></div>
+<!-- HERO -->
+<section class="hero fade-in">
   <div class="content">
-    <h1>Современная стоматология</h1>
-    <p>Забота о вашей улыбке каждый день</p>
-    <button class="main-btn" onclick="openModal()">Записаться</button>
+    <h1>Bandadon Clinic</h1>
+    <p>Современная стоматология — забота о вашей улыбке</p>
+    <button class="main-btn" onclick="openModal()">Записаться на приём</button>
   </div>
-</header>
-
-<section id="services" class="services fade-in">
-<h2>Наши услуги</h2>
-<div class="cards">
-
-<div class="card">
-<i class="fa-solid fa-teeth"></i>
-<h3>All-on-4</h3>
-<p>Полное восстановление улыбки за 1 день</p>
-</div>
-
-<div class="card">
-<i class="fa-solid fa-screwdriver-wrench"></i>
-<h3>Имплантация</h3>
-<p>Надёжные импланты премиум-класса</p>
-</div>
-
-<div class="card">
-<i class="fa-solid fa-face-smile"></i>
-<h3>Отбеливание и гигиена</h3>
-<p>Профессиональная чистка и уход</p>
-</div>
-
-<div class="card">
-<i class="fa-solid fa-tooth"></i>
-<h3>Лечение зубов</h3>
-<p>Без боли и стресса</p>
-</div>
-
-<div class="card">
-<i class="fa-solid fa-crown"></i>
-<h3>Протезирование</h3>
-<p>Современные коронки и протезы</p>
-</div>
-
-</div>
 </section>
 
-<section id="promo" class="promo fade-in">
-<h2>Специальные предложения</h2>
+<!-- SERVICES -->
+<section id="services" class="fade-in">
+  <h2>Наши услуги</h2>
 
-<div class="promo-cards">
+  <div class="cards">
+    <div class="card">
+      <i class="fa-solid fa-teeth"></i>
+      <h3>All-on-4</h3>
+      <p>Полное восстановление зубов за 1 день</p>
+      <span class="price">от 99 000 ₽</span>
+    </div>
 
-<div class="promo-card">
-<i class="fa-solid fa-teeth"></i>
-<h3>All-on-4</h3>
-<p>Полное восстановление улыбки за 1 день</p>
-<span class="price">от 99 000 ₽</span>
-<button class="main-btn" onclick="openModal()">Записаться</button>
-</div>
+    <div class="card">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+      <h3>Имплантация</h3>
+      <p>Надёжные современные импланты</p>
+    </div>
 
-<div class="promo-card">
-<i class="fa-solid fa-face-smile-beam"></i>
-<h3>Виниры</h3>
-<p>Белоснежная улыбка без брекетов</p>
-<span class="price">от 15 000 ₽ за зуб</span>
-<button class="main-btn" onclick="openModal()">Записаться</button>
-</div>
+    <div class="card">
+      <i class="fa-solid fa-face-smile-beam"></i>
+      <h3>Виниры</h3>
+      <p>Идеальная белоснежная улыбка</p>
+      <span class="price">от 15 000 ₽ за зуб</span>
+    </div>
 
-</div>
-</section>
+    <div class="card">
+      <i class="fa-solid fa-tooth"></i>
+      <h3>Лечение зубов</h3>
+      <p>Без боли и стресса</p>
+    </div>
 
-<section id="why" class="why fade-in">
-<h2>Почему выбирают нас</h2>
-<div class="why-cards">
-<div>🦷 Современное оборудование</div>
-<div>👨‍⚕️ Опытные врачи</div>
-<div>🕒 Быстро и без боли</div>
-<div>📍 Удобное расположение</div>
-</div>
-</section>
+    <div class="card">
+      <i class="fa-solid fa-shield-heart"></i>
+      <h3>Отбеливание и гигиена</h3>
+      <p>Профессиональный уход за улыбкой</p>
+    </div>
 
-<section id="map" class="map-section fade-in">
-<h2>Как нас найти</h2>
-
-<div class="map-container">
-  <div class="address">
-    <h3>Наш адрес</h3>
-    <p>г. Москва, ул. Примерная, 10</p>
-    <p>Телефон: +7 (999) 123-45-67</p>
+    <div class="card">
+      <i class="fa-solid fa-user-doctor"></i>
+      <h3>Протезирование</h3>
+      <p>Съёмные и несъёмные протезы</p>
+    </div>
   </div>
-
-  <!-- Яндекс карта -->
-  <iframe 
-    src="hhttps://yandex.ru/maps/?um=constructor%3A1cb3986597f7e23a19ced644798a7f5b35639740053aeb867d52be6c21665df4&source=constructorLink"
-    frameborder="0">
-  </iframe>
-</div>
 </section>
 
+<!-- WHY US -->
+<section id="why" class="fade-in">
+  <h2>Почему выбирают нас</h2>
+
+  <div class="cards">
+    <div class="card">
+      <i class="fa-solid fa-user-doctor"></i>
+      <h3>Опытные врачи</h3>
+      <p>Более 10 лет практики</p>
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-microscope"></i>
+      <h3>Современное оборудование</h3>
+      <p>Европейские технологии</p>
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-heart"></i>
+      <h3>Без боли</h3>
+      <p>Комфортное лечение</p>
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-location-dot"></i>
+      <h3>Удобное расположение</h3>
+      <p>В центре города</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contacts" class="fade-in">
+  <h2>Контакты</h2>
+
+  <p style="text-align:center;font-size:18px;margin-bottom:20px;">
+    📍 Адрес: г. Москва, ул. Примерная, д. 10<br>
+    📞 Телефон: +7 (999) 123-45-67
+  </p>
+
+  <!-- Yandex Map -->
+  <div style="max-width:1000px;margin:0 auto;">
+    <iframe 
+      src="https://yandex.ru/map-widget/v1/?um=constructor%3A0b7e7a1c8a3a7f5f2b8d1e9a3b9f7a1c&amp;source=constructor"
+      width="100%" 
+      height="400" 
+      frameborder="0">
+    </iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-© 2026 Bandadon Clinic
+  © 2026 Bandadon Clinic
 </footer>
 
+<!-- STICKY BUTTONS -->
 <div class="sticky-buttons">
-<button onclick="openModal()" class="main-btn">Записаться</button>
-<a href="https://t.me/yourtelegram" class="main-btn telegram">Telegram</a>
+  <button class="main-btn" onclick="openModal()">Записаться</button>
+  <a href="https://t.me/yourtelegram" class="main-btn">Telegram</a>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal()">&times;</span>
-<h2>Записаться на приём</h2>
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Записаться на приём</h2>
 
-<form id="contactForm">
-<input type="text" id="name" placeholder="Ваше имя" required>
-<input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
-<input type="email" id="email" placeholder="Email (необязательно)">
-<button type="submit" class="main-btn">Отправить</button>
-<p id="status"></p>
-</form>
-</div>
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Ваше имя" required>
+      <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+      <input type="email" id="email" placeholder="Email (необязательно)">
+      <button type="submit" class="main-btn">Отправить</button>
+      <p id="status"></p>
+    </form>
+  </div>
 </div>
 
+<!-- Scripts -->
 <script src="https://unpkg.com/imask"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
