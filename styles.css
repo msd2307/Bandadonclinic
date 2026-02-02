@@ -73,18 +73,24 @@ body {
 
 /* HERO */
 .hero {
-  padding: 100px 0;
+  padding: 120px 0;
   text-align: center;
+  background: url("bg.jpg") center/cover no-repeat;
+  position: relative;
+  color: white;
 }
 
-.hero h1 {
-  font-size: 48px;
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
 }
 
-.hero p {
-  margin: 20px 0;
-  font-size: 18px;
+.hero .container {
+  position: relative;
 }
+
 
 /* SECTIONS */
 section {
