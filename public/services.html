@@ -30,13 +30,35 @@
 <li>🧒 Детская стоматология</li>
 <li>🦷 Ортодонтия (брекеты, элайнеры)</li>
 <li>🩺 Хирургия</li>
-<li>🦷 Виниры</li>
+<li>✨ Виниры</li>
 <li>😴 Лечение под седацией</li>
 </ul>
 
 <button class="main-btn" onclick="openModal()">Записаться</button>
 </section>
 
+<!-- Sticky buttons -->
+<div class="sticky-buttons">
+<button onclick="openModal()" class="main-btn">Записаться</button>
+<a href="https://t.me/yourtelegram" class="main-btn">Telegram</a>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">&times;</span>
+<h2>Записаться на приём</h2>
+<form id="contactForm">
+<input type="text" id="name" placeholder="Ваше имя" required>
+<input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+<input type="email" id="email" placeholder="Email (необязательно)">
+<button type="submit" class="main-btn">Отправить</button>
+<p id="status"></p>
+</form>
+</div>
+</div>
+
+<script src="https://unpkg.com/imask"></script>
 <script src="script.js"></script>
 </body>
 </html>
