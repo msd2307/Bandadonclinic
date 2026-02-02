@@ -10,12 +10,11 @@
 </head>
 <body>
 
-<header class="header">
+<header class="top-header">
   <div class="logo">Bandadon Clinic</div>
   <nav>
     <a href="#services">Услуги</a>
-    <a href="#promo">Предложения</a>
-    <a href="#why">Почему мы</a>
+    <a href="#promo">Акции</a>
     <a href="#map">Контакты</a>
   </nav>
 </header>
@@ -23,78 +22,62 @@
 <section class="hero">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1>Современная стоматология</h1>
-    <p>Забота о вашей улыбке</p>
-    <button onclick="openModal()">Записаться</button>
+    <h1>Bandadon Clinic</h1>
+    <p>Современная стоматология — забота о вашей улыбке</p>
+    <button class="main-btn" onclick="openModal()">Записаться</button>
   </div>
 </section>
 
-<section class="services" id="services">
+<section id="services" class="services">
   <h2>Наши услуги</h2>
   <div class="cards">
-    <div class="card">
-      <i class="fa-solid fa-tooth"></i>
-      <h3>Лечение зубов</h3>
-    </div>
-    <div class="card">
-      <i class="fa-solid fa-face-smile"></i>
-      <h3>Отбеливание</h3>
-    </div>
-    <div class="card">
-      <i class="fa-solid fa-shield-heart"></i>
-      <h3>Профилактика</h3>
-    </div>
-    <div class="card">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-      <h3>Имплантация</h3>
-    </div>
+    <div class="card"><i class="fa-solid fa-tooth"></i> Лечение зубов</div>
+    <div class="card"><i class="fa-solid fa-face-smile"></i> Отбеливание</div>
+    <div class="card"><i class="fa-solid fa-shield-heart"></i> Профилактика</div>
+    <div class="card"><i class="fa-solid fa-screwdriver-wrench"></i> Имплантация</div>
   </div>
 </section>
 
-<section class="promo" id="promo">
+<section id="promo" class="promo">
   <h2>Специальные предложения</h2>
 
   <div class="promo-cards">
 
     <div class="promo-card">
       <i class="fa-solid fa-teeth"></i>
-      <h3>All-on-4 от 99 000 ₽</h3>
+      <h3>All-on-4</h3>
+
+      <div class="price-badge">от 99 000 ₽</div>
+
       <p>
         Полное восстановление зубов за 1 день.<br>
         Надёжная имплантация и естественная улыбка.
       </p>
-      <button onclick="openModal()">Записаться</button>
+
+      <button class="main-btn" onclick="openModal()">Записаться</button>
     </div>
 
     <div class="promo-card">
       <i class="fa-solid fa-face-smile-beam"></i>
       <h3>Виниры</h3>
+
+      <div class="price-badge">от 15 000 ₽ за зуб</div>
+
       <p>
         Идеальная форма и цвет зубов.<br>
         Белоснежная улыбка без брекетов.
       </p>
-      <button onclick="openModal()">Записаться</button>
+
+      <button class="main-btn" onclick="openModal()">Записаться</button>
     </div>
 
   </div>
 </section>
 
-<section class="why" id="why">
-  <h2>Почему выбирают нас</h2>
-  <div class="why-cards">
-    <div class="why-card">Современное оборудование</div>
-    <div class="why-card">Опытные врачи</div>
-    <div class="why-card">Без боли и стресса</div>
-    <div class="why-card">Гарантия качества</div>
-  </div>
-</section>
-
-<section class="map" id="map">
+<section id="map" class="map">
   <h2>Мы на карте</h2>
-  <iframe 
-    src="https://www.google.com/maps?q=Москва&output=embed"
-    width="100%" height="350" style="border:0;" loading="lazy">
-  </iframe>
+  <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A7b1e9bdf4e0b9c6e6f0c9f8f0f3d8d8d8&amp;source=constructor"
+    width="100%" height="400" frameborder="0"></iframe>
 </section>
 
 <footer>
@@ -103,10 +86,8 @@
 
 <!-- Sticky buttons -->
 <div class="sticky-buttons">
-  <button onclick="openModal()">Запись</button>
-  <a href="https://t.me/yourtelegram" target="_blank" class="tg-btn">
-    <i class="fa-brands fa-telegram"></i>
-  </a>
+  <button onclick="openModal()">Записаться</button>
+  <a href="https://t.me/yourtelegram" target="_blank"><i class="fa-brands fa-telegram"></i></a>
 </div>
 
 <!-- MODAL -->
