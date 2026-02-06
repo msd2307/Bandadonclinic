@@ -90,7 +90,6 @@ body {
   background: rgba(0,0,0,0.4);
 }
 
-
 h1 {
   font-size: 32px;
 }
@@ -208,12 +207,26 @@ footer {
   z-index: 2000;
 }
 
+/* ВАЖНО: базовый стиль modal-content */
 .modal-content {
   background: white;
   padding: 25px;
   border-radius: 15px;
   width: 90%;
   max-width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 0.4s ease;
+}
+
+.modal-content.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .modal-content form {
@@ -293,4 +306,9 @@ input {
   .main-btn {
     width: 100%;
   }
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
