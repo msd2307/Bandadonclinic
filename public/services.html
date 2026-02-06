@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Услуги стоматологии Elitár — имплантация, виниры, лечение</title>
-  <meta name="description" content="Услуги стоматологии Elitár в Москве: имплантация зубов, виниры, All-on-4, лечение и отбеливание. Онлайн-запись на приём.">
+  <title>Услуги стоматологии Elitár</title>
+  <meta name="description" content="Услуги стоматологии Elitár в Москве: имплантация, виниры, All-on-4, лечение и отбеливание зубов. Запись онлайн.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
@@ -14,6 +14,7 @@
 
 <header class="header">
   <div class="logo">Эстетическая стоматология Elitár</div>
+
   <nav class="nav" id="navMenu">
     <a href="index.html">Главная</a>
     <a href="#implant">Имплантация</a>
@@ -22,101 +23,90 @@
     <a href="#treatment">Лечение</a>
     <a href="#whitening">Отбеливание</a>
   </nav>
+
   <div class="burger" id="burger">
     <span></span><span></span><span></span>
   </div>
 </header>
 
-<main>
-
-<section class="fade-in" style="margin-top:80px;">
-  <h1>Наши услуги</h1>
-  <p>Полный спектр эстетической и лечебной стоматологии</p>
-</section>
+<header class="hero fade-in" style="background:url('bg.jpg') center/cover no-repeat;">
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>Наши услуги</h1>
+    <p>Полный спектр эстетической и лечебной стоматологии</p>
+    <button class="main-btn" onclick="openModal()">Записаться</button>
+  </div>
+</header>
 
 <section class="fade-up">
-  <h2>Разделы услуг</h2>
-  <div class="why-cards">
-    <div><a href="#implant">🦷 Имплантация</a></div>
-    <div><a href="#veneers">😁 Виниры</a></div>
-    <div><a href="#all4">✨ All-on-4</a></div>
-    <div><a href="#treatment">🪥 Лечение</a></div>
-    <div><a href="#whitening">🌟 Отбеливание</a></div>
+  <h2>Основные направления</h2>
+
+  <div class="promo-cards">
+
+    <div class="promo-card" id="implant">
+      <h3>🦷 Имплантация</h3>
+      <p>Надёжное восстановление зубов современными имплантами.</p>
+      <span class="price">от 10 000 ₽</span>
+      <button class="main-btn" onclick="openModal()">Записаться</button>
+    </div>
+
+    <div class="promo-card" id="veneers">
+      <h3>😁 Виниры</h3>
+      <p>Эстетика формы и цвета зубов за короткий срок.</p>
+      <span class="price">от 15 000 ₽</span>
+      <button class="main-btn" onclick="openModal()">Записаться</button>
+    </div>
+
+    <div class="promo-card" id="all4">
+      <h3>✨ All-on-4</h3>
+      <p>Полное восстановление улыбки за 1 день.</p>
+      <span class="price">от 99 000 ₽</span>
+      <button class="main-btn" onclick="openModal()">Записаться</button>
+    </div>
+
+    <div class="promo-card" id="treatment">
+      <h3>🪥 Лечение зубов</h3>
+      <p>Безболезненное лечение и пломбирование.</p>
+      <span class="price">от 3 000 ₽</span>
+      <button class="main-btn" onclick="openModal()">Записаться</button>
+    </div>
+
+    <div class="promo-card" id="whitening">
+      <h3>🌟 Отбеливание</h3>
+      <p>Профессиональное отбеливание для белоснежной улыбки.</p>
+      <span class="price">от 5 000 ₽</span>
+      <button class="main-btn" onclick="openModal()">Записаться</button>
+    </div>
+
+    <div class="promo-card">
+      <h3>🦷 Протезирование</h3>
+      <p>Съёмные и несъёмные протезы высокого качества.</p>
+      <span class="price">от 12 000 ₽</span>
+      <button class="main-btn" onclick="openModal()">Записаться</button>
+    </div>
+
   </div>
-</section>
-
-<section id="implant" class="fade-up">
-  <h2>Имплантация зубов</h2>
-  <p>Современная имплантация с использованием надёжных систем.</p>
-  <ul class="service-list">
-    <li>Одноэтапная имплантация</li>
-    <li>Классическая имплантация</li>
-    <li>Имплантация под ключ</li>
-  </ul>
-  <span class="price">от 10 000 ₽</span><br><br>
-  <button class="main-btn" onclick="openModal()">Записаться</button>
-</section>
-
-<section id="veneers" class="fade-up">
-  <h2>Виниры</h2>
-  <p>Эстетическое восстановление формы и цвета зубов.</p>
-  <ul class="service-list">
-    <li>Керамические виниры</li>
-    <li>Композитные виниры</li>
-    <li>Цифровое моделирование улыбки</li>
-  </ul>
-  <span class="price">от 15 000 ₽</span><br><br>
-  <button class="main-btn" onclick="openModal()">Записаться</button>
-</section>
-
-<section id="all4" class="fade-up">
-  <h2>All-on-4</h2>
-  <p>Полное восстановление зубов за 1 день.</p>
-  <ul class="service-list">
-    <li>Диагностика и КТ</li>
-    <li>Установка 4 имплантов</li>
-    <li>Временный протез за 24 часа</li>
-  </ul>
-  <span class="price">от 99 000 ₽</span><br><br>
-  <button class="main-btn" onclick="openModal()">Записаться</button>
-</section>
-
-<section id="treatment" class="fade-up">
-  <h2>Лечение зубов</h2>
-  <ul class="service-list">
-    <li>Лечение кариеса</li>
-    <li>Лечение каналов</li>
-    <li>Пломбирование</li>
-  </ul>
-  <span class="price">от 3 000 ₽</span><br><br>
-  <button class="main-btn" onclick="openModal()">Записаться</button>
-</section>
-
-<section id="whitening" class="fade-up">
-  <h2>Отбеливание зубов</h2>
-  <ul class="service-list">
-    <li>Zoom 4</li>
-    <li>Air Flow</li>
-    <li>Домашнее отбеливание</li>
-  </ul>
-  <span class="price">от 5 000 ₽</span><br><br>
-  <button class="main-btn" onclick="openModal()">Записаться</button>
 </section>
 
 <section class="fade-up">
   <h2>Запишитесь на консультацию</h2>
-  <p>Мы подберём для вас оптимальное решение</p>
+  <p>Мы подберём для вас оптимальное решение для вашей улыбки</p>
   <button class="main-btn" onclick="openModal()">Записаться</button>
 </section>
 
-</main>
-
 <footer>© 2026 Эстетическая стоматология Elitár</footer>
 
+<div class="sticky-buttons">
+  <button onclick="openModal()" class="main-btn">Записаться</button>
+  <a href="https://t.me/ammsss77" class="main-btn">Telegram</a>
+</div>
+
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content" id="modalContent">
     <span class="close" onclick="closeModal()">×</span>
     <h2>Записаться на приём</h2>
+
     <form id="contactForm">
       <input type="text" id="name" placeholder="Ваше имя" required>
       <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
