@@ -1,38 +1,131 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Услуги</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Услуги стоматологии Elitár — имплантация, виниры, лечение</title>
+  <meta name="description" content="Услуги стоматологии Elitár в Москве: имплантация зубов, виниры, All-on-4, лечение и отбеливание. Онлайн-запись на приём.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/imask"></script>
 </head>
 <body>
 
 <header class="header">
-<div class="logo">Bandadon Clinic</div>
-<nav class="nav active">
-<a href="index.html">Главная</a>
-</nav>
+  <div class="logo">Эстетическая стоматология Elitár</div>
+  <nav class="nav" id="navMenu">
+    <a href="index.html">Главная</a>
+    <a href="#implant">Имплантация</a>
+    <a href="#veneers">Виниры</a>
+    <a href="#all4">All-on-4</a>
+    <a href="#treatment">Лечение</a>
+    <a href="#whitening">Отбеливание</a>
+  </nav>
+  <div class="burger" id="burger">
+    <span></span><span></span><span></span>
+  </div>
 </header>
 
-<section class="fade-up">
-<h2>Наши услуги</h2>
+<main>
 
-<ul class="service-list">
-<li>Имплантация</li>
-<li>All-on-4</li>
-<li>Лечение кариеса</li>
-<li>Протезирование</li>
-<li>Виниры</li>
-<li>Отбеливание</li>
-<li>Гигиена</li>
-<li>Ортодонтия</li>
-<li>Хирургия</li>
-<li>Детская стоматология</li>
-</ul>
+<section class="fade-in" style="margin-top:80px;">
+  <h1>Наши услуги</h1>
+  <p>Полный спектр эстетической и лечебной стоматологии</p>
 </section>
 
+<section class="fade-up">
+  <h2>Разделы услуг</h2>
+  <div class="why-cards">
+    <div><a href="#implant">🦷 Имплантация</a></div>
+    <div><a href="#veneers">😁 Виниры</a></div>
+    <div><a href="#all4">✨ All-on-4</a></div>
+    <div><a href="#treatment">🪥 Лечение</a></div>
+    <div><a href="#whitening">🌟 Отбеливание</a></div>
+  </div>
+</section>
+
+<section id="implant" class="fade-up">
+  <h2>Имплантация зубов</h2>
+  <p>Современная имплантация с использованием надёжных систем.</p>
+  <ul class="service-list">
+    <li>Одноэтапная имплантация</li>
+    <li>Классическая имплантация</li>
+    <li>Имплантация под ключ</li>
+  </ul>
+  <span class="price">от 10 000 ₽</span><br><br>
+  <button class="main-btn" onclick="openModal()">Записаться</button>
+</section>
+
+<section id="veneers" class="fade-up">
+  <h2>Виниры</h2>
+  <p>Эстетическое восстановление формы и цвета зубов.</p>
+  <ul class="service-list">
+    <li>Керамические виниры</li>
+    <li>Композитные виниры</li>
+    <li>Цифровое моделирование улыбки</li>
+  </ul>
+  <span class="price">от 15 000 ₽</span><br><br>
+  <button class="main-btn" onclick="openModal()">Записаться</button>
+</section>
+
+<section id="all4" class="fade-up">
+  <h2>All-on-4</h2>
+  <p>Полное восстановление зубов за 1 день.</p>
+  <ul class="service-list">
+    <li>Диагностика и КТ</li>
+    <li>Установка 4 имплантов</li>
+    <li>Временный протез за 24 часа</li>
+  </ul>
+  <span class="price">от 99 000 ₽</span><br><br>
+  <button class="main-btn" onclick="openModal()">Записаться</button>
+</section>
+
+<section id="treatment" class="fade-up">
+  <h2>Лечение зубов</h2>
+  <ul class="service-list">
+    <li>Лечение кариеса</li>
+    <li>Лечение каналов</li>
+    <li>Пломбирование</li>
+  </ul>
+  <span class="price">от 3 000 ₽</span><br><br>
+  <button class="main-btn" onclick="openModal()">Записаться</button>
+</section>
+
+<section id="whitening" class="fade-up">
+  <h2>Отбеливание зубов</h2>
+  <ul class="service-list">
+    <li>Zoom 4</li>
+    <li>Air Flow</li>
+    <li>Домашнее отбеливание</li>
+  </ul>
+  <span class="price">от 5 000 ₽</span><br><br>
+  <button class="main-btn" onclick="openModal()">Записаться</button>
+</section>
+
+<section class="fade-up">
+  <h2>Запишитесь на консультацию</h2>
+  <p>Мы подберём для вас оптимальное решение</p>
+  <button class="main-btn" onclick="openModal()">Записаться</button>
+</section>
+
+</main>
+
 <footer>© 2026 Эстетическая стоматология Elitár</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-content" id="modalContent">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2>Записаться на приём</h2>
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Ваше имя" required>
+      <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+      <input type="email" id="email" placeholder="Email (необязательно)">
+      <button type="submit" class="main-btn">Отправить</button>
+      <p id="status"></p>
+    </form>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
