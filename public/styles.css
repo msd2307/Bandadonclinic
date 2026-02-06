@@ -312,3 +312,8 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
+.map {
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+}
