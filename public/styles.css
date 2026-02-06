@@ -323,6 +323,52 @@ button:disabled {
 
 /* ===== SERVICES UPGRADE ===== */
 
+.promo-cards {
+  margin-top: 30px;
+}
+
+.promo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff, #f9fcff);
+}
+
+/* декоративная полоска сверху */
+.promo-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+/* иконка больше */
+.promo-card h3 {
+  font-size: 20px;
+}
+
+/* цена как бейдж */
+.promo-card .price {
+  background: rgba(0,114,255,0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* hover эффект */
+.promo-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,114,255,.15);
+}
+
+/* кнопка меньше внутри карточек */
+.promo-card .main-btn {
+  height: 42px;
+  font-size: 15px;
+}
+
 .services-list .promo-card {
   cursor: default;
 }
